@@ -1,0 +1,14 @@
+.Home{
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 768px){
+    .Home{
+        display: flex;
+        flex-direction: row;
+        width: 99%;
+        height: 100%;
+    }
+
+}

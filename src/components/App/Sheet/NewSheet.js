@@ -2,7 +2,7 @@
 import { React, Component } from 'react'
 import './Sheet.css';
 
-class Sheet extends Component{
+class NewSheet extends Component{
     render(){
 
         const charaName = '';
@@ -17,4 +17,4 @@ class Sheet extends Component{
     }
 }
 
-export default Sheet
+export default NewSheet

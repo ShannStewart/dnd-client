@@ -1,0 +1,11 @@
+.sheet{
+    background-color: yellow;
+}
+
+
+@media only screen and (min-width: 768px){
+.sheet{
+    width: 70%;
+}
+
+}

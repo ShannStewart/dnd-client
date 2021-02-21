@@ -1,12 +1,18 @@
 import './Home.css'
 import { Component } from "react";
 
-class Home extends Component{
+import TokenService from '../../../../services/token-service'
 
+import SideBar from '../../SideBar/SideBar'
+import Sheet from '../../Sheet/Sheet'
+
+class Home extends Component{
+    
     render(){
         return(
             <div className='Home'>
-                Home
+                <SideBar charaList={this.props.charaList} userList={this.props.userList}/>
+                <Sheet charaList={this.props.charaList}/>        
             </div>
         )
     }
