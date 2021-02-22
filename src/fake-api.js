@@ -18,5 +18,10 @@ export default{
             'feats': ['Skilled in Perception', 'Darkvision'],
             'ability': [{'name': 'DEX', 'score': 2}, {'name': 'INT', 'score': 1}]
         },
-    ]
+    ],
+
+    'classes':{
+
+    }
+    
 }

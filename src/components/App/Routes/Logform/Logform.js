@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom'
 import './Logform.css'
 import TokenService from '../../../../services/token-service'
 
@@ -79,6 +80,7 @@ render(){
                       Log in
                   </button>
                   </form>
+                  <p>Don't have an account?</p><Link to='/register'>Register</Link>
               </div>
               <div className="errorSpace">
                   <p className="hidden" id="usernameMissing">Username is required</p>

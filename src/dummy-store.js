@@ -15,4 +15,12 @@ export default {
         }
 
     ],
+    
+    "characters": [
+        {
+            'id': 'C100',
+            'name': 'John',
+            'race': 'Human'
+        }
+    ]
 }
