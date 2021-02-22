@@ -20,8 +20,28 @@ export default{
         },
     ],
 
-    'classes':{
+    'classes':[
+        {
+            'name': 'fighter',
+            'proficiencies_choice': 2,
+            'proficiencies': ['Skill: Acrobatics', 'Skill: Animal Handling', 'Skill: Athletics', 'Skill: History', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Perception', 'Skill: Survival'],
+            'feat': ['All armor', 'shields', 'Darts', 'martial-weapons'],
+            'saving-thorw': ['Str', 'Con']
+        },
+        {
+            'name': 'rogue',
+            'proficiencies_choice': 4,
+            'proficiencies': ['Skill: Acrobatics', 'Skill: Athletics', 'Skill: Deception', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Investigation', 'Skill: Perception', 'Skill: Performance', 'Skill: Persuasion', 'Skill: Sleight of Hand', 'Skill: Stealth'],
+            'feat': ['All armor', 'shields', 'simple-weapons', 'martial-weapons'],
+            'saving-thorw': ['Dex', 'Int']
+        },
+        {
+            'name': 'wizard',
+            'proficiencies_choice': 2,
+            'proficiencies': ['Skill: Arcana', 'Skill: History', 'Skill: Insight', 'Skill: Investigaiton', 'Skill: Medicine', 'Skill: Religion'],
+            'feat': ['Daggers', 'Quarterstaffs', 'Darts', 'Slings'],
+            'saving-thorw': ['Int', 'Wis']
+        }
+    ]
 
-    }
-    
 }
