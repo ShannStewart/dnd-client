@@ -10,6 +10,7 @@ import Logform from '../App/Routes/Logform/Logform'
 
 import dummyStore from '../../dummy-store'
 import Register from './Routes/Register/Register';
+import fakeAPI from '../../fake-api';
 
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
     users: [],
     userID: 0,
     characterID: 0,
+    form: false,
 };
 
 componentDidMount() {
@@ -31,12 +33,8 @@ userSubmit = (u, p) => {
 
   var newUser = {"id": "newUser" + this.state.userID, "user_name": u, "password": p, "charas": []};
 
-  //console.log('new user: ' + newUser);
-
   var newUserID = this.state.userID + 1;
   this.setState({userID: newUserID});
-
-  //console.log('check1');
 
   var newUserList = this.state.users.concat(newUser);
   this.setState({ users: newUserList });
@@ -44,8 +42,12 @@ userSubmit = (u, p) => {
   var ider = newUser.id;
 
   TokenService.saveAuthToken(ider);
+}
 
-  //console.log('check2');
+openForm = () =>{
+  console.log('openForm ran');
+
+  this.setState({ form : true });
 
 }
 
@@ -57,7 +59,11 @@ userSubmit = (u, p) => {
           ?<Route
             exact
             path='/'
-            render={routeProps => ( <Home {...routeProps} userList={this.state.users} charaList={this.state.characters}/> )}/>
+            render={routeProps => ( <Home {...routeProps} 
+              userList={this.state.users} 
+              charaList={this.state.characters} 
+              openForm={this.openForm} 
+              form={this.state.form}/> )}/>
             :<Route
             exact
             path='/'

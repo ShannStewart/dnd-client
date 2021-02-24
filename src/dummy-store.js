@@ -20,7 +20,8 @@ export default {
         {
             'id': 'C100',
             'name': 'John',
-            'race': 'Human'
+            'race': 0,
+            'class': 0,
         }
     ]
 }

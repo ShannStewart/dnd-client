@@ -1,18 +1,21 @@
 export default{
     'races':[
         {
+            'id': 0,
             'name': 'human',
             'language': ['common'],
             'feats': [],
             'ability': [{'name': 'STR', 'score': 1}, {'name': 'DEX', 'score': 1}, {'name': 'CON', 'score': 1}, {'name': 'INT', 'score': 1}, {'name': 'WIS', 'score': 1}, {'name': 'CHA', 'score': 1}]
         },
         {
+            'id': 1,
             'name': 'Dwarf',
             'language': ['common', 'Dwarvish'],
             'feats': ['Battleaxe Proficiency', 'Handaxe Proficiency', 'Lighthammer Proficiency', 'Warhammer Proficiency', 'Smith Tools Proficiency', 'Brewers Supplies Proficiency', "Mason's Tools Proficiency", 'Darkvision', 'Dwarven-Resilence'],
             'ability': [{'name': 'CON', 'score': 2}, {'name': 'WIS', 'score': 1}]
         },
         {
+            'id': 2,
             'name': 'Elf',
             'language': ['common', 'Elvish'],
             'feats': ['Skilled in Perception', 'Darkvision'],
@@ -22,6 +25,7 @@ export default{
 
     'classes':[
         {
+            'id': 0,
             'name': 'fighter',
             'proficiencies_choice': 2,
             'proficiencies': ['Skill: Acrobatics', 'Skill: Animal Handling', 'Skill: Athletics', 'Skill: History', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Perception', 'Skill: Survival'],
@@ -29,6 +33,7 @@ export default{
             'saving-thorw': ['Str', 'Con']
         },
         {
+            'id': 1,
             'name': 'rogue',
             'proficiencies_choice': 4,
             'proficiencies': ['Skill: Acrobatics', 'Skill: Athletics', 'Skill: Deception', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Investigation', 'Skill: Perception', 'Skill: Performance', 'Skill: Persuasion', 'Skill: Sleight of Hand', 'Skill: Stealth'],
@@ -36,6 +41,7 @@ export default{
             'saving-thorw': ['Dex', 'Int']
         },
         {
+            'id': 2,
             'name': 'wizard',
             'proficiencies_choice': 2,
             'proficiencies': ['Skill: Arcana', 'Skill: History', 'Skill: Insight', 'Skill: Investigaiton', 'Skill: Medicine', 'Skill: Religion'],

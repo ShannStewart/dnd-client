@@ -11,8 +11,15 @@ class Home extends Component{
     render(){
         return(
             <div className='Home'>
-                <SideBar charaList={this.props.charaList} userList={this.props.userList}/>
-                <Sheet charaList={this.props.charaList}/>        
+                <SideBar 
+                charaList={this.props.charaList} 
+                userList={this.props.userList} 
+                openForm={this.props.openForm} 
+                form={this.props.form}
+                />
+            {this.props.form
+                ?<Sheet charaList={this.props.charaList}/>
+                :<div></div>}        
             </div>
         )
     }

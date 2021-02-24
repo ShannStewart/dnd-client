@@ -10,10 +10,18 @@ class SideBar extends Component{
 
         window.location.reload()
     }
+
+    handelAddition = () =>{
+        console.log('handleAddition ran');
+
+        this.props.openForm();
+    }
+
     render(){
         return(
             <div className='sidebar'>
                  <button onClick={this.handleLogOut}>Log Out</button>
+                 <button onClick={this.handelAddition}>Add Character</button>
                  <p>Sidebar</p>
             </div>
         )
