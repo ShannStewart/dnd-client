@@ -18,7 +18,10 @@ class Home extends Component{
                 form={this.props.form}
                 />
             {this.props.form
-                ?<Sheet charaList={this.props.charaList}/>
+                ?<Sheet
+                fakeAPI={this.props.fakeAPI} 
+                charaList={this.props.charaList}
+                />
                 :<div></div>}        
             </div>
         )

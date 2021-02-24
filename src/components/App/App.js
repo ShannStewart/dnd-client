@@ -12,6 +12,8 @@ import dummyStore from '../../dummy-store'
 import Register from './Routes/Register/Register';
 import fakeAPI from '../../fake-api';
 
+import { findUser, findCharacter, getCharasForUser } from '../../helper';
+
 
 class App extends Component {
   state = {
@@ -60,6 +62,7 @@ openForm = () =>{
             exact
             path='/'
             render={routeProps => ( <Home {...routeProps} 
+              fakeAPI={fakeAPI}
               userList={this.state.users} 
               charaList={this.state.characters} 
               openForm={this.openForm} 
