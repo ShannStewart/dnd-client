@@ -60,7 +60,10 @@ class Sheet extends Component{
         var jobNumber = ev.target.value;
   
           var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
-          this.setState({ charaJob : newJob.name })
+
+          var health = Number(newJob.hp + this.state.con_mod); 
+
+          this.setState({ charaJob : newJob.name, hp : health })
   
       }
 
@@ -101,38 +104,38 @@ class Sheet extends Component{
     }
     handleDexChange = ev =>{
         var ability = Number(ev.target.value);
-        this.setState({ dex : ability })
-
         var total = ability + this.state.dex_bonus;
-        this.setState({ dex_total : total })
+        var mod = this.handleMod(total);
+
+        this.setState({ dex : ability, dex_total : total, dex_mod : mod })
     }
     handleConChange = ev =>{
         var ability = Number(ev.target.value);
-        this.setState({ con : ability })
-
         var total = ability + this.state.con_bonus;
-        this.setState({ con_total : total })
+        var mod = this.handleMod(total);
+
+        this.setState({ con : ability, con_total : total, con_mod : mod })
     }
     handleIntChange = ev =>{
         var ability = Number(ev.target.value);
-        this.setState({ int : ability })
-
         var total = ability + this.state.int_bonus;
-        this.setState({ int_total : total })
+        var mod = this.handleMod(total);
+
+        this.setState({ int : ability, int_total : total, int_mod : mod })
     }
     handleWisChange = ev =>{
         var ability = Number(ev.target.value);
-        this.setState({ wis : ability })
-
         var total = ability + this.state.wis_bonus;
-        this.setState({ wis_total : total })
+        var mod = this.handleMod(total);
+
+        this.setState({ wis : ability, wis_total : total, wis_mod : mod })
     }
     handleChaChange = ev =>{
         var ability = Number(ev.target.value);
-        this.setState({ cha : ability })
-
         var total = ability + this.state.cha_bonus;
-        this.setState({ cha_total : total })
+        var mod = this.handleMod(total);
+    
+        this.setState({ cha : ability, cha_total : total, cha_mod : mod })
     }
 
     handleHP = ev =>{
@@ -202,35 +205,35 @@ class Sheet extends Component{
                                     </select>
                                 </div>
                                 <div className='ability'>
-                                    <h2>{this.state.dex_total}</h2><h3> = </h3><h3> {this.state.dex_bonus} </h3><h3> + </h3><h3>{this.state.dex}</h3>
+                                    <h1>{this.state.dex_mod}</h1><h2>{this.state.dex_total}</h2><h3> = </h3><h3> {this.state.dex_bonus} </h3><h3> + </h3><h3>{this.state.dex}</h3>
                                     <select name='chara_dex' onChange={this.handleDexChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                     </select>
                                 </div>
                                 <div className='ability'>
-                                    <h2>{this.state.con_total}</h2><h3> = </h3><h3> {this.state.con_bonus} </h3><h3> + </h3><h3>{this.state.con}</h3>
+                                    <h1>{this.state.con_mod}</h1><h2>{this.state.con_total}</h2><h3> = </h3><h3> {this.state.con_bonus} </h3><h3> + </h3><h3>{this.state.con}</h3>
                                     <select name='chara_con' onChange={this.handleConChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                     </select>
                                 </div>
                                 <div className='ability'>
-                                    <h2>{this.state.int_total}</h2><h3> = </h3><h3> {this.state.int_bonus} </h3><h3> + </h3><h3>{this.state.int}</h3>
+                                    <h1>{this.state.int_mod}</h1><h2>{this.state.int_total}</h2><h3> = </h3><h3> {this.state.int_bonus} </h3><h3> + </h3><h3>{this.state.int}</h3>
                                     <select name='chara_int' onChange={this.handleIntChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                     </select>
                                 </div>
                                 <div className='ability'>
-                                    <h2>{this.state.wis_total}</h2><h3> = </h3><h3> {this.state.wis_bonus} </h3><h3> + </h3><h3>{this.state.wis}</h3>
+                                    <h1>{this.state.wis_mod}</h1><h2>{this.state.wis_total}</h2><h3> = </h3><h3> {this.state.wis_bonus} </h3><h3> + </h3><h3>{this.state.wis}</h3>
                                     <select name='chara_wis' onChange={this.handleWisChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                     </select>
                                 </div>
                                 <div className='ability'>
-                                    <h2>{this.state.cha_total}</h2><h3> = </h3><h3> {this.state.cha_bonus} </h3><h3> + </h3><h3>{this.state.cha}</h3>
+                                    <h1>{this.state.cha_mod}</h1><h2>{this.state.cha_total}</h2><h3> = </h3><h3> {this.state.cha_bonus} </h3><h3> + </h3><h3>{this.state.cha}</h3>
                                     <select name='chara_cha' onChange={this.handleChaChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
@@ -240,15 +243,14 @@ class Sheet extends Component{
                             
                             <div>
                                 <div className='hp'>
-                                    <label>{this.state.hp}</label>
-                                    <input type='number' name='chara_hp' onChange={this.handleHP}></input>
+                                    <h1>{this.state.hp}</h1>
+                                    <label>HP</label>
                                 </div>
                                 <p>Skills</p>
                                 {skillCheck.map((stuff, index) => <p className={stuff.proficiency ? 'true' : 'false'} key={index}>{stuff.name}</p>)}
                             </div>
                             <div>
-                                <p>Race</p>
-                                <p>Class</p>
+                                <p>Traits</p>
                             </div>
 
                         </div>  
