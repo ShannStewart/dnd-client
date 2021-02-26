@@ -2,6 +2,26 @@
     background-color: yellow;
 }
 
+.ability{
+    display: flex;
+    flex-direction: row;
+}
+
+.mainForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.columns{
+    display: flex;
+    flex-direction: row;
+}
+
+.hp{
+    display: flex;
+    flex-direction: column;
+}
+
 
 @media only screen and (min-width: 768px){
 .sheet{

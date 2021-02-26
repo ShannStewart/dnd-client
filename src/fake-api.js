@@ -48,6 +48,8 @@ export default{
             'feat': ['Daggers', 'Quarterstaffs', 'Darts', 'Slings'],
             'saving-thorw': ['Int', 'Wis']
         }
-    ]
+    ],
+
+    'skills': ['Acrobatics', 'Animal Handling', 'Arcana', 'Atheletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival'],
 
 }
