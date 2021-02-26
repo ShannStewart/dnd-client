@@ -28,7 +28,7 @@ export default{
             'id': '0',
             'name': 'Fighter',
             'proficiencies_choice': 2,
-            'proficiencies': ['Skill: Acrobatics', 'Skill: Animal Handling', 'Skill: Athletics', 'Skill: History', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Perception', 'Skill: Survival'],
+            'proficiencies': ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
             'feat': ['All armor', 'shields', 'Darts', 'martial-weapons'],
             'saving-thorw': ['Str', 'Con']
         },
@@ -36,7 +36,7 @@ export default{
             'id': '1',
             'name': 'Rogue',
             'proficiencies_choice': 4,
-            'proficiencies': ['Skill: Acrobatics', 'Skill: Athletics', 'Skill: Deception', 'Skill: Insight', 'Skill: Intimidation', 'Skill: Investigation', 'Skill: Perception', 'Skill: Performance', 'Skill: Persuasion', 'Skill: Sleight of Hand', 'Skill: Stealth'],
+            'proficiencies': ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth'],
             'feat': ['All armor', 'shields', 'simple-weapons', 'martial-weapons'],
             'saving-thorw': ['Dex', 'Int']
         },
@@ -44,7 +44,7 @@ export default{
             'id': '2',
             'name': 'Wizard',
             'proficiencies_choice': 2,
-            'proficiencies': ['Skill: Arcana', 'Skill: History', 'Skill: Insight', 'Skill: Investigaiton', 'Skill: Medicine', 'Skill: Religion'],
+            'proficiencies': ['Arcana', 'History', 'Insight', 'Investigaiton', 'Medicine', 'Religion'],
             'feat': ['Daggers', 'Quarterstaffs', 'Darts', 'Slings'],
             'saving-thorw': ['Int', 'Wis']
         }

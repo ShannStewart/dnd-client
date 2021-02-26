@@ -28,7 +28,14 @@ class Sheet extends Component{
              int_total: 0,
              wis_total: 0,
              cha_total: 0,
+             str_mod: 0,
+             dex_mod: 0,
+             con_mod: 0,
+             int_mod: 0,
+             wis_mod: 0,
+             cha_mod: 0,
             hp: 0,
+            skills: {}
         }
 
     handleNameChange = ev => {
@@ -57,43 +64,71 @@ class Sheet extends Component{
   
       }
 
-    handleStrChange = ev =>{
-        var ability = ev.target.value;
-        this.setState({ str : ability })
+    handleMod = (x) =>{
+        var mod = '';
 
+        if (x == 8 || x == 9){
+            mod = '-1';
+        }
+        else if (x == 10 || x == 11){
+            mod = '0';
+        }
+        else if (x == 12 || x == 13){
+            mod = '+1';
+        }
+        else if (x == 14 || x == 15){
+            mod = '+2';
+        }
+        else if (x == 16 || x == 17){
+            mod = '+3';
+        }
+        else if (x == 18 || x == 19){
+            mod = '+4';
+        }
+        else{
+            mod = '+5'
+        }
+
+        return mod;
+    }
+
+    handleStrChange = ev =>{
+        var ability = Number(ev.target.value);
         var total = ability + this.state.str_bonus;
-        this.setState({ str_total : total })
+        var mod = this.handleMod(total);
+
+        this.setState({ str : ability, str_total : total, str_mod : mod })
     }
     handleDexChange = ev =>{
-        var ability = ev.target.value;
+        var ability = Number(ev.target.value);
         this.setState({ dex : ability })
 
         var total = ability + this.state.dex_bonus;
         this.setState({ dex_total : total })
     }
     handleConChange = ev =>{
-        var ability = ev.target.value;
+        var ability = Number(ev.target.value);
         this.setState({ con : ability })
 
         var total = ability + this.state.con_bonus;
         this.setState({ con_total : total })
     }
     handleIntChange = ev =>{
-        var ability = ev.target.value;
+        var ability = Number(ev.target.value);
         this.setState({ int : ability })
 
         var total = ability + this.state.int_bonus;
         this.setState({ int_total : total })
     }
     handleWisChange = ev =>{
-        var ability = ev.target.value;
+        var ability = Number(ev.target.value);
         this.setState({ wis : ability })
 
         var total = ability + this.state.wis_bonus;
         this.setState({ wis_total : total })
     }
     handleChaChange = ev =>{
-        var ability = ev.target.value;
+        var ability = Number(ev.target.value);
         this.setState({ cha : ability })
 
         var total = ability + this.state.cha_bonus;
@@ -101,27 +136,23 @@ class Sheet extends Component{
     }
 
     handleHP = ev =>{
-        var hp = ev.target.value;
+        var hp = Number(ev.target.value);
         this.setState({ hp : hp})
     }
 
     render(){
 
         var skills = this.props.fakeAPI.skills;
-        console.log(skills);
 
         var skillCheck = [];
-        var skillObject = {};
 
         var i;
         for (i = 0; i < skills.length; i++){
-            console.log(skills[i]);
+            var skillObject = {};
             skillObject.name = skills[i];
             skillObject.proficiency = false;
-            console.log(skillObject);
 
             skillCheck = skillCheck.concat(skillObject);
-            console.log(skillCheck);
         }
         
         console.log(skillCheck);
@@ -164,7 +195,7 @@ class Sheet extends Component{
                         <div className='columns'>
                             <div className='abilityList'>
                                 <div className='ability'>
-                                    <h2>{this.state.str_total}</h2><h3> = </h3><h3> {this.state.str_bonus} </h3><h3> + </h3><h3>{this.state.str}</h3>
+                                    <h1>{this.state.str_mod}</h1><h2>{this.state.str_total}</h2><h3> = </h3><h3> {this.state.str_bonus} </h3><h3> + </h3><h3>{this.state.str}</h3>
                                     <select name='chara_str' onChange={this.handleStrChange}>
                                         <option value={null}>Select</option>
                                         {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
@@ -213,6 +244,7 @@ class Sheet extends Component{
                                     <input type='number' name='chara_hp' onChange={this.handleHP}></input>
                                 </div>
                                 <p>Skills</p>
+                                {skillCheck.map((stuff, index) => <p className={stuff.proficiency ? 'true' : 'false'} key={index}>{stuff.name}</p>)}
                             </div>
                             <div>
                                 <p>Race</p>

@@ -22,6 +22,14 @@
     flex-direction: column;
 }
 
+.false{
+    color: red
+}
+
+.true{
+    color: greenyellow;
+}
+
 
 @media only screen and (min-width: 768px){
 .sheet{
