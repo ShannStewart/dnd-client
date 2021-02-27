@@ -2,7 +2,7 @@
 import { React, Component } from 'react'
 import './Sheet.css';
 
-import { findRace, findJob } from '../../../apiHelper'
+import { findRace, findJob, findBonus } from '../../../apiHelper'
 
 class Sheet extends Component{
         state = {
@@ -25,6 +25,7 @@ class Sheet extends Component{
             cha_bonus: 0,
             skills: {},
             job: null,
+            race: null,
         }
 
     handleNameChange = ev => {
@@ -51,27 +52,76 @@ class Sheet extends Component{
 
     }
 
+    findRaceScore = () =>{
+
+    }
+
     handleRaceChange = ev =>{
       // console.log('handleRaceChange ran ' + ev.target.value);
 
       var raceNumber = ev.target.value;
-
-      var raceStr = 0;
-      var raceDex = 0;
-      var raceCon = 0;
-      var raceInt = 0;
-      var raceWis = 0;
-      var raceCha = 0;
-
+    
       if(isNaN(raceNumber) || raceNumber == null){
-        this.setState({ charaRace : null });
+
+         raceStr = 0;
+         raceDex = 0;
+         raceCon = 0;
+         raceInt = 0;
+         raceWis = 0;
+         raceCha = 0;
+
+        this.setState({ charaRace : null, race : null, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, });
     }
     else{
+
+        var race = findRace(this.props.fakeAPI.races, raceNumber);
+        var raceBonus = race.ability;
+  
+        var str = findBonus(raceBonus, 'STR');
+        var dex = findBonus(raceBonus, 'DEX');
+        var con = findBonus(raceBonus, 'CON');
+        var int = findBonus(raceBonus, 'INT');
+        var wis = findBonus(raceBonus, 'WIS');
+        var cha = findBonus(raceBonus, 'CHA');
+
         var newRace = findRace(this.props.fakeAPI.races, raceNumber);
-        this.setState({ charaRace : newRace.name })
+
+        if (str !== undefined){
+            var raceStr = str.score;
+          }
+          else {
+          raceStr = 0;}
+
+          if (dex !== undefined){
+            var raceDex = dex.score;
+          }
+          else {
+            raceDex = 0;}
+
+          if (con !== undefined){
+            var raceCon = con.score;
+          } else
+           raceCon = 0;}
+
+          if (int !== undefined){
+            var raceInt = int.score;
+          }
+          else{
+          raceInt = 0;}
+          
+          if (wis !== undefined){
+            var raceWis = wis.score;
+          } else {
+          raceWis = 0;}
+
+          if (cha !== undefined){
+            var raceCha = cha.score;
+          } else {
+          raceCha = 0;}
+
+        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, });
         }
 
-    }
 
     handleJobChange = ev =>{
         // console.log('handleRaceChange ran ' + ev.target.value);
@@ -115,6 +165,10 @@ class Sheet extends Component{
         if (x == 0 || isNaN(x)){
             mod = '0';
         }
+        else if 
+            (x > 0 && x < 8){
+                mod = '-2';
+            }
         else if
             (x == 8 || x == 9){
             mod = '-1';
@@ -148,6 +202,10 @@ class Sheet extends Component{
 
         if (x == 0 || isNaN(x)){
             mod = 0;
+        }
+        else if 
+        (x > 0 && x < 8){
+            mod = '-2';
         }
         else if
             (x == 8 || x == 9){
@@ -270,6 +328,22 @@ class Sheet extends Component{
       //  var total = ability + this.state.cha_bonus;
       //  var mod = this.handleMod(total);
 
+      var proficiency = 1;
+      var decision = [];    
+
+      if(this.state.job !== null && !isNaN(this.state.job)){
+        proficiency = this.handleProficiencies();
+        decision = this.handleDecision();
+
+        var currentJob = findJob(this.props.fakeAPI.classes, this.state.job);
+            }
+
+        if(this.state.race !== null && !isNaN(this.state.race)){
+
+            var currentRace = findRace(this.props.fakeAPI.classes, this.state.race);
+            
+            }
+
         var str_total = this.state.str + this.state.str_bonus;
         var dex_total = this.state.dex + this.state.dex_bonus;
         var con_total = this.state.con + this.state.con_bonus;
@@ -286,23 +360,18 @@ class Sheet extends Component{
         var hp = Number(this.handleHealth());
         hp = Number(hp + con_num);
 
-        var proficiency = 1;
-        var decision = [];
-
-        if(this.state.job !== null && !isNaN(this.state.job)){
-            proficiency = this.handleProficiencies();
+        if (isNaN(hp)){
+            hp = 0;
         }
+    
 
-        if(this.state.job !== null && !isNaN(this.state.job)){
-            decision = this.handleDecision();
-        }
-
+      
         const fields: JSX.Element[] = [];
             for (let i = 1; i <= proficiency; i++) {
-                fields.push(<select id={i} key={i} name='proficiencies'>
+                fields.push(<div><select id={i} key={i} name='proficiencies'>
                     <option value={null}>Select</option>
                     {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
-                </select>);
+                </select></div>);
                 }	
 
         return( 
@@ -396,11 +465,16 @@ class Sheet extends Component{
                                 <p>Skills</p>
                                 {skillCheck.map((stuff, index) => <p className={stuff.proficiency ? 'true' : 'false'} key={index}>{stuff.name}</p>)}
                             </div>
-                            <div class='skills'>
-                                <p>Skills</p>
+
+                        <div>
+                            <div className='skills'>
+                                <p>Proficiencies</p>
                                 {fields}
                             </div>
+                            <div>
 
+                            </div>
+                        </div>
                         </div>  
                     </div>
                     </div>
