@@ -27,7 +27,11 @@
 }
 
 .true{
-    color: greenyellow;
+    color: green
+}
+
+.skills{
+    direction:ltr;
 }
 
 

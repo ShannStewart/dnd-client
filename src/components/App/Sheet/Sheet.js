@@ -6,6 +6,7 @@ import { findRace, findJob } from '../../../apiHelper'
 
 class Sheet extends Component{
         state = {
+            id: null,
             charaName: '',
             charaRace: '',
             charaJob: '',
@@ -22,20 +23,8 @@ class Sheet extends Component{
             int_bonus: 0,
             wis_bonus: 0,
             cha_bonus: 0,
-             str_total: 0,
-             dex_total: 0,
-             con_total: 0,
-             int_total: 0,
-             wis_total: 0,
-             cha_total: 0,
-             str_mod: 0,
-             dex_mod: 0,
-             con_mod: 0,
-             int_mod: 0,
-             wis_mod: 0,
-             cha_mod: 0,
-            hp: 0,
-            skills: {}
+            skills: {},
+            job: null,
         }
 
     handleNameChange = ev => {
@@ -44,13 +33,43 @@ class Sheet extends Component{
         
     }
 
+    handleHealth = () =>{
+        //console.log('current job is ' + this.state.job);
+
+        var jobNumber = this.state.job;
+
+        var jobBonus = 0;
+
+        if(jobNumber == null){
+            return 0;
+        }
+        else{
+            var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
+            jobBonus = newJob.hp;
+            return jobBonus;
+        }
+
+    }
+
     handleRaceChange = ev =>{
       // console.log('handleRaceChange ran ' + ev.target.value);
 
       var raceNumber = ev.target.value;
 
+      var raceStr = 0;
+      var raceDex = 0;
+      var raceCon = 0;
+      var raceInt = 0;
+      var raceWis = 0;
+      var raceCha = 0;
+
+      if(isNaN(raceNumber) || raceNumber == null){
+        this.setState({ charaRace : null });
+    }
+    else{
         var newRace = findRace(this.props.fakeAPI.races, raceNumber);
         this.setState({ charaRace : newRace.name })
+        }
 
     }
 
@@ -58,19 +77,46 @@ class Sheet extends Component{
         // console.log('handleRaceChange ran ' + ev.target.value);
   
         var jobNumber = ev.target.value;
-  
+
+        if(isNaN(jobNumber) || jobNumber == null){
+            this.setState({ charaJob : null, job : null });
+        }
+        else{
           var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
 
-          var health = Number(newJob.hp + this.state.con_mod); 
-
-          this.setState({ charaJob : newJob.name, hp : health })
+          this.setState({ charaJob : newJob.name, job : newJob.id });
+        }
   
       }
+
+    handleProficiencies = () =>{
+        var jobNumber = this.state.job;
+
+        var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
+        var jobBonus = newJob.proficiencies_choice;
+        return jobBonus;
+    }
+
+    handleDecision = () => {
+        var jobNumber = this.state.job;
+
+        var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
+        var jobProficiencies = [];
+        var jobProficiencies = newJob.proficiencies;
+
+        return jobProficiencies
+    }
 
     handleMod = (x) =>{
         var mod = '';
 
-        if (x == 8 || x == 9){
+        //console.log(x);
+
+        if (x == 0 || isNaN(x)){
+            mod = '0';
+        }
+        else if
+            (x == 8 || x == 9){
             mod = '-1';
         }
         else if (x == 10 || x == 11){
@@ -95,47 +141,93 @@ class Sheet extends Component{
         return mod;
     }
 
+    handleNum = (x) =>{
+        var mod = '';
+
+        //console.log(x);
+
+        if (x == 0 || isNaN(x)){
+            mod = 0;
+        }
+        else if
+            (x == 8 || x == 9){
+            mod = -1;
+        }
+        else if (x == 10 || x == 11){
+            mod = 0;
+        }
+        else if (x == 12 || x == 13){
+            mod = +1;
+        }
+        else if (x == 14 || x == 15){
+            mod = +2;
+        }
+        else if (x == 16 || x == 17){
+            mod = +3;
+        }
+        else if (x == 18 || x == 19){
+            mod = +4;
+        }
+        else{
+            mod = +5
+        }
+
+        return mod;
+    }
+
     handleStrChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.str_bonus;
-        var mod = this.handleMod(total);
 
-        this.setState({ str : ability, str_total : total, str_mod : mod })
+        if(isNaN(ability)){
+            ability = 0;
+        }
+   
+        this.setState({ str : ability })
     }
     handleDexChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.dex_bonus;
-        var mod = this.handleMod(total);
 
-        this.setState({ dex : ability, dex_total : total, dex_mod : mod })
+        if(isNaN(ability)){
+            ability = 0;
+        }
+
+        this.setState({ dex : ability})
     }
     handleConChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.con_bonus;
-        var mod = this.handleMod(total);
 
-        this.setState({ con : ability, con_total : total, con_mod : mod })
+        if(isNaN(ability)){
+            ability = 0;
+        }
+
+        this.setState({ con : ability })
     }
     handleIntChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.int_bonus;
-        var mod = this.handleMod(total);
 
-        this.setState({ int : ability, int_total : total, int_mod : mod })
+        if(isNaN(ability)){
+            ability = 0;
+        }
+
+        this.setState({ int : ability })
     }
     handleWisChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.wis_bonus;
-        var mod = this.handleMod(total);
 
-        this.setState({ wis : ability, wis_total : total, wis_mod : mod })
+        if(isNaN(ability)){
+            ability = 0;
+        }
+
+        this.setState({ wis : ability })
     }
     handleChaChange = ev =>{
         var ability = Number(ev.target.value);
-        var total = ability + this.state.cha_bonus;
-        var mod = this.handleMod(total);
+
+        if(isNaN(ability)){
+            ability = 0;
+        }
     
-        this.setState({ cha : ability, cha_total : total, cha_mod : mod })
+        this.setState({ cha : ability})
     }
 
     handleHP = ev =>{
@@ -158,7 +250,7 @@ class Sheet extends Component{
             skillCheck = skillCheck.concat(skillObject);
         }
         
-        console.log(skillCheck);
+       // console.log(skillCheck);
 
         var races = Array.from(this.props.fakeAPI.races);
         var jobs = Array.from(this.props.fakeAPI.classes);
@@ -166,17 +258,54 @@ class Sheet extends Component{
 
         var theWord = '';
 
-        if(this.state.charaRace !== ''){
-            theWord = 'The';
-        }
 
-        if(this.state.charaName !== '' && this.state.charaRace !== ''){
+        if(this.state.charaName !== '' && ((this.state.charaRace !== '' && this.state.charaRace !== null) || (this.state.charaJob !=='' && this.state.charaJob !== null))){
             theWord = 'the';
         }
 
-    
+        if((this.state.charaName == '' || this.state.charaName == null) && ((this.state.charaRace !== '' && this.state.charaRace !== null) || (this.state.charaJob !== '' && this.state.charaJob !== null))){
+            theWord = 'The';
+        }
 
-        return(
+      //  var total = ability + this.state.cha_bonus;
+      //  var mod = this.handleMod(total);
+
+        var str_total = this.state.str + this.state.str_bonus;
+        var dex_total = this.state.dex + this.state.dex_bonus;
+        var con_total = this.state.con + this.state.con_bonus;
+        var int_total = this.state.int + this.state.int_bonus;
+        var wis_total = this.state.wis + this.state.wis_bonus;
+        var cha_total = this.state.cha + this.state.cha_bonus;
+        var str_mod = this.handleMod(str_total);
+        var dex_mod = this.handleMod(dex_total);
+        var con_mod = this.handleMod(con_total);
+        var con_num = this.handleNum(con_total);
+        var int_mod = this.handleMod(int_total);
+        var wis_mod = this.handleMod(wis_total);
+        var cha_mod = this.handleMod(cha_total);
+        var hp = Number(this.handleHealth());
+        hp = Number(hp + con_num);
+
+        var proficiency = 1;
+        var decision = [];
+
+        if(this.state.job !== null && !isNaN(this.state.job)){
+            proficiency = this.handleProficiencies();
+        }
+
+        if(this.state.job !== null && !isNaN(this.state.job)){
+            decision = this.handleDecision();
+        }
+
+        const fields: JSX.Element[] = [];
+            for (let i = 1; i <= proficiency; i++) {
+                fields.push(<select id={i} key={i} name='proficiencies'>
+                    <option value={null}>Select</option>
+                    {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
+                </select>);
+                }	
+
+        return( 
             <div className='sheet'>
                 <form>
                     <div className='mainForm'>
@@ -197,60 +326,79 @@ class Sheet extends Component{
                     <div>
                         <div className='columns'>
                             <div className='abilityList'>
-                                <div className='ability'>
-                                    <h1>{this.state.str_mod}</h1><h2>{this.state.str_total}</h2><h3> = </h3><h3> {this.state.str_bonus} </h3><h3> + </h3><h3>{this.state.str}</h3>
-                                    <select name='chara_str' onChange={this.handleStrChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>
+                                    <div className='ability'>
+                                        <h1>{str_mod}</h1><h2>{str_total}</h2><h3> = </h3><h3> {this.state.str_bonus} </h3><h3> + </h3><h3>{this.state.str}</h3>
+                                        <select name='chara_str' onChange={this.handleStrChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                    <label>Strength</label>
                                 </div>
-                                <div className='ability'>
-                                    <h1>{this.state.dex_mod}</h1><h2>{this.state.dex_total}</h2><h3> = </h3><h3> {this.state.dex_bonus} </h3><h3> + </h3><h3>{this.state.dex}</h3>
-                                    <select name='chara_dex' onChange={this.handleDexChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>
+                                    <div className='ability'>
+                                        <h1>{dex_mod}</h1><h2>{dex_total}</h2><h3> = </h3><h3> {this.state.dex_bonus} </h3><h3> + </h3><h3>{this.state.dex}</h3>
+                                        <select name='chara_dex' onChange={this.handleDexChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                    <label>Dexterity</label>
                                 </div>
-                                <div className='ability'>
-                                    <h1>{this.state.con_mod}</h1><h2>{this.state.con_total}</h2><h3> = </h3><h3> {this.state.con_bonus} </h3><h3> + </h3><h3>{this.state.con}</h3>
-                                    <select name='chara_con' onChange={this.handleConChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>
+                                    <div className='ability'>
+                                        <h1>{con_mod}</h1><h2>{con_total}</h2><h3> = </h3><h3> {this.state.con_bonus} </h3><h3> + </h3><h3>{this.state.con}</h3>
+                                        <select name='chara_con' onChange={this.handleConChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                    <label>Constitution</label>
                                 </div>
-                                <div className='ability'>
-                                    <h1>{this.state.int_mod}</h1><h2>{this.state.int_total}</h2><h3> = </h3><h3> {this.state.int_bonus} </h3><h3> + </h3><h3>{this.state.int}</h3>
-                                    <select name='chara_int' onChange={this.handleIntChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>
+                                    <div className='ability'>
+                                        <h1>{int_mod}</h1><h2>{int_total}</h2><h3> = </h3><h3> {this.state.int_bonus} </h3><h3> + </h3><h3>{this.state.int}</h3>
+                                        <select name='chara_int' onChange={this.handleIntChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                    <label>Intelligence</label>
                                 </div>
-                                <div className='ability'>
-                                    <h1>{this.state.wis_mod}</h1><h2>{this.state.wis_total}</h2><h3> = </h3><h3> {this.state.wis_bonus} </h3><h3> + </h3><h3>{this.state.wis}</h3>
-                                    <select name='chara_wis' onChange={this.handleWisChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>
+                                    <div className='ability'>
+                                        <h1>{wis_mod}</h1><h2>{wis_total}</h2><h3> = </h3><h3> {this.state.wis_bonus} </h3><h3> + </h3><h3>{this.state.wis}</h3>
+                                        <select name='chara_wis' onChange={this.handleWisChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                    <label>Wisdom</label>
                                 </div>
-                                <div className='ability'>
-                                    <h1>{this.state.cha_mod}</h1><h2>{this.state.cha_total}</h2><h3> = </h3><h3> {this.state.cha_bonus} </h3><h3> + </h3><h3>{this.state.cha}</h3>
-                                    <select name='chara_cha' onChange={this.handleChaChange}>
-                                        <option value={null}>Select</option>
-                                        {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
-                                    </select>
+                                <div>   
+                                    <div className='ability'>
+                                        <h1>{cha_mod}</h1><h2>{cha_total}</h2><h3> = </h3><h3> {this.state.cha_bonus} </h3><h3> + </h3><h3>{this.state.cha}</h3>
+                                        <select name='chara_cha' onChange={this.handleChaChange}>
+                                            <option value={null}>Select</option>
+                                            {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
+                                        </select>
+                                    </div>
+                                <label>Charisma</label>
                                 </div>
                             </div>
                             
                             <div>
                                 <div className='hp'>
-                                    <h1>{this.state.hp}</h1>
+                                    <h1>{hp}</h1>
                                     <label>HP</label>
                                 </div>
                                 <p>Skills</p>
                                 {skillCheck.map((stuff, index) => <p className={stuff.proficiency ? 'true' : 'false'} key={index}>{stuff.name}</p>)}
                             </div>
-                            <div>
-                                <p>Traits</p>
+                            <div class='skills'>
+                                <p>Skills</p>
+                                {fields}
                             </div>
 
                         </div>  

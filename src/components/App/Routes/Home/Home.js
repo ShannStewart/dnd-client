@@ -14,7 +14,7 @@ class Home extends Component{
                 <SideBar 
                 charaList={this.props.charaList} 
                 userList={this.props.userList} 
-                openForm={this.props.openForm} 
+                newForm={this.props.newForm} 
                 form={this.props.form}
                 />
             {this.props.form

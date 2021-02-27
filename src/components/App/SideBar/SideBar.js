@@ -14,7 +14,7 @@ class SideBar extends Component{
     handelAddition = () =>{
         console.log('handleAddition ran');
 
-        this.props.openForm();
+        this.props.newForm();
     }
 
     render(){

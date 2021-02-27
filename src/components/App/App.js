@@ -46,7 +46,7 @@ userSubmit = (u, p) => {
   TokenService.saveAuthToken(ider);
 }
 
-openForm = () =>{
+newForm = () =>{
   console.log('openForm ran');
 
   this.setState({ form : true });
@@ -65,7 +65,7 @@ openForm = () =>{
               fakeAPI={fakeAPI}
               userList={this.state.users} 
               charaList={this.state.characters} 
-              openForm={this.openForm} 
+              newForm ={this.newForm} 
               form={this.state.form}/> )}/>
             :<Route
             exact
