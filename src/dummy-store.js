@@ -4,14 +4,12 @@ export default {
         {
             "id": "Z100",
             "user_name": "turtlesoup",
-            "password": "password",
-            "charas": [],
+            "password": "password"
         },
         {
             "id": "Z101",
             "user_name": "boba",
-            "password": "tea",
-            "charas": [],
+            "password": "tea"
         }
 
     ],
@@ -22,6 +20,7 @@ export default {
             'name': 'John',
             'race': 0,
             'class': 0,
+            'userid': "Z100"
         }
     ]
 }
