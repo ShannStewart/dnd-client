@@ -293,6 +293,11 @@ class Sheet extends Component{
         this.setState({ hp : hp})
     }
 
+    addSkill = ev =>{
+        ev.preventDefault();
+        console.log('addSkill ran: ');
+    }
+
     render(){
 
         var skills = this.props.fakeAPI.skills;
@@ -366,13 +371,13 @@ class Sheet extends Component{
     
 
       
-        const fields: JSX.Element[] = [];
-            for (let i = 1; i <= proficiency; i++) {
-                fields.push(<div><select id={i} key={i} name='proficiencies'>
-                    <option value={null}>Select</option>
-                    {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
-                </select></div>);
-                }	
+   //     const fields: JSX.Element[] = [];
+   //         for (let i = 1; i <= proficiency; i++) {
+   //             fields.push(<div><select id={i} key={i} name='proficiencies'>
+   //                 <option value={null}>Select</option>
+   //                 {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
+   //             </select></div>);
+   //             }	
 
         return( 
             <div className='sheet'>
@@ -469,7 +474,10 @@ class Sheet extends Component{
                         <div>
                             <div className='skills'>
                                 <p>Proficiencies</p>
-                                {fields}
+                                <div><select id={i} key={i} name='proficiencies'>
+                                     <option value={null}>Select</option>
+                                        {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
+                                    </select><button onClick={this.addSkill}>+</button></div>
                             </div>
                             <div>
 

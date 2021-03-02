@@ -3,7 +3,7 @@ export default {
 
         {
             "id": "Z100",
-            "user_name": "turtlesoup",
+            "name": "turtlesoup",
             "password": "password"
         },
         {

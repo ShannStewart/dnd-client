@@ -32,7 +32,7 @@ class Logform extends Component{
             return console.log("no name"); 
         }
 
-        const userCheck = this.props.existUser.find(user => user.user_name == userName);
+        const userCheck = this.props.existUser.find(user => user.name == userName);
         const passCheck = this.props.existUser.find(user => user.password == password);
 
         if (userCheck == null){
