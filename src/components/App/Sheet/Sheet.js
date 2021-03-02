@@ -23,7 +23,8 @@ class Sheet extends Component{
             int_bonus: 0,
             wis_bonus: 0,
             cha_bonus: 0,
-            skills: {},
+            skills: [],
+            raceSkills: [],
             job: null,
             race: null,
         }
@@ -119,7 +120,7 @@ class Sheet extends Component{
           } else {
           raceCha = 0;}
 
-        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, });
+        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, raceSkills: [] });
         }
 
 
@@ -134,7 +135,7 @@ class Sheet extends Component{
         else{
           var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
 
-          this.setState({ charaJob : newJob.name, job : newJob.id });
+          this.setState({ charaJob : newJob.name, job : newJob.id, skills: [] });
         }
   
       }
@@ -295,7 +296,24 @@ class Sheet extends Component{
 
     addSkill = ev =>{
         ev.preventDefault();
-        console.log('addSkill ran: ');
+
+        var prof = document.getElementById('prof');
+        var skills = this.state.skills;
+        var newSkills;
+
+        if (prof.value !== 'select' && prof.value !== 'Select' && prof.value !== null && prof.value !== undefined){
+            newSkills = skills.concat(prof.value);
+            this.setState({ skills : newSkills });
+        }
+    }
+
+    removeSkill = (ev, skill) =>{
+        ev.preventDefault();
+
+        var skills = this.state.skills;
+        var newSkills = skills.filter(prof => prof !== skill);
+
+        this.setState({ skills : newSkills });
     }
 
     render(){
@@ -308,7 +326,11 @@ class Sheet extends Component{
         for (i = 0; i < skills.length; i++){
             var skillObject = {};
             skillObject.name = skills[i];
+
             skillObject.proficiency = false;
+            if(this.state.skills.find(skill => skill === skills[i]) || this.state.raceSkills.find(skill => skill === skills[i])){
+                skillObject.proficiency = true;
+            }
 
             skillCheck = skillCheck.concat(skillObject);
         }
@@ -341,6 +363,7 @@ class Sheet extends Component{
         decision = this.handleDecision();
 
         var currentJob = findJob(this.props.fakeAPI.classes, this.state.job);
+        proficiency = currentJob.proficiencies_choice;
             }
 
         if(this.state.race !== null && !isNaN(this.state.race)){
@@ -474,15 +497,25 @@ class Sheet extends Component{
                         <div>
                             <div className='skills'>
                                 <p>Proficiencies</p>
-                                <div><select id={i} key={i} name='proficiencies'>
+                                <ul>
+                                    {this.state.skills.map((skill, index) => <li key={index}>{skill}<button onClick={(e) => {this.removeSkill(e,skill)}}>-</button></li>)}
+                                </ul>
+                                <div><select id={i} key={i} name='prof' id='prof'>
                                      <option value={null}>Select</option>
                                         {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
-                                    </select><button onClick={this.addSkill}>+</button></div>
-                            </div>
-                            <div>
-
+                                    </select>
+                                    {(this.state.skills.length < proficiency)? <button onClick={this.addSkill}>+</button> : <div></div>}</div>
                             </div>
                         </div>
+                        <div>
+                                <div className='language'>
+                                    <h4>Language</h4>
+                                </div>
+                                <div className='feats'>
+                                    <h4>Feats</h4>
+                                    <h4>Proficiencies</h4>
+                                </div>
+                            </div>
                         </div>  
                     </div>
                     </div>
