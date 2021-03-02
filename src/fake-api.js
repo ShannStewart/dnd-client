@@ -33,7 +33,7 @@ export default{
             'proficiencies_choice': 2,
             'proficiencies': ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
             'feat': ['All armor', 'shields', 'Darts', 'martial-weapons'],
-            'saving-thorw': ['Str', 'Con'],
+            'savingThrow': ['Str', 'Con'],
             'hp': 10
         },
         {
@@ -42,7 +42,7 @@ export default{
             'proficiencies_choice': 4,
             'proficiencies': ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth'],
             'feat': ['All armor', 'shields', 'simple-weapons', 'martial-weapons'],
-            'saving-thorw': ['Dex', 'Int'],
+            'savingThrow': ['Dex', 'Int'],
             'hp': 8
         },
         {
@@ -51,7 +51,7 @@ export default{
             'proficiencies_choice': 2,
             'proficiencies': ['Arcana', 'History', 'Insight', 'Investigaiton', 'Medicine', 'Religion'],
             'feat': ['Daggers', 'Quarterstaffs', 'Darts', 'Slings'],
-            'saving-thorw': ['Int', 'Wis'],
+            'savingThrow': ['Int', 'Wis'],
             'hp': 6
         }
     ],

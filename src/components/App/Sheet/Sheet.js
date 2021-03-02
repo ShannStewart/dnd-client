@@ -53,10 +53,6 @@ class Sheet extends Component{
 
     }
 
-    findRaceScore = () =>{
-
-    }
-
     handleRaceChange = ev =>{
       // console.log('handleRaceChange ran ' + ev.target.value);
 
@@ -86,6 +82,7 @@ class Sheet extends Component{
         var cha = findBonus(raceBonus, 'CHA');
 
         var newRace = findRace(this.props.fakeAPI.races, raceNumber);
+        var skill = newRace.proficiencies
 
         if (str !== undefined){
             var raceStr = str.score;
@@ -120,7 +117,7 @@ class Sheet extends Component{
           } else {
           raceCha = 0;}
 
-        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, raceSkills: [] });
+        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, raceSkills: skill });
         }
 
 
@@ -154,6 +151,12 @@ class Sheet extends Component{
         var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
         var jobProficiencies = [];
         var jobProficiencies = newJob.proficiencies;
+
+        var i;
+        for (i = 0; i < this.state.skills.length; i++){
+            var jobProficiencies = jobProficiencies.filter(job => job !== this.state.skills[i]);
+           // console.log(jobProficiencies);
+        }
 
         return jobProficiencies
     }
@@ -356,19 +359,30 @@ class Sheet extends Component{
       //  var mod = this.handleMod(total);
 
       var proficiency = 1;
-      var decision = [];    
+      var decision = [];   
+      
+      var prof = [];
+      var feat = [];
+      var lang = [];
+      var save = [];
 
-      if(this.state.job !== null && !isNaN(this.state.job)){
+      if(this.state.job !== null && !isNaN(this.state.job) && this.state.job !== undefined){
         proficiency = this.handleProficiencies();
         decision = this.handleDecision();
 
         var currentJob = findJob(this.props.fakeAPI.classes, this.state.job);
         proficiency = currentJob.proficiencies_choice;
+        feat = currentJob.feat;
+        save = currentJob.savingThrow;
+        //console.log(feat);
             }
 
-        if(this.state.race !== null && !isNaN(this.state.race)){
+        if(this.state.race !== null && !isNaN(this.state.race) && this.state.race !== undefined){
 
-            var currentRace = findRace(this.props.fakeAPI.classes, this.state.race);
+            var currentRace = findRace(this.props.fakeAPI.races, this.state.race);
+           feat = feat.concat(currentRace.feat);
+           prof = currentRace.proficiencies;
+           lang = currentRace.language;
             
             }
 
@@ -510,10 +524,23 @@ class Sheet extends Component{
                         <div>
                                 <div className='language'>
                                     <h4>Language</h4>
+                                    <ul>
+                                    {lang.map((skill, index) => <li key={index}>{skill}</li>)}
+                                        </ul>
                                 </div>
                                 <div className='feats'>
                                     <h4>Feats</h4>
+                                        <ul>
+                                    {feat.map((skill, index) => <li key={index}>{skill}</li>)}
+                                        </ul>
                                     <h4>Proficiencies</h4>
+                                        <ul>
+                                    {prof.map((skill, index) => <li key={index}>{skill}</li>)}
+                                        </ul>
+                                     <h4>Saving-Throw</h4>
+                                        <ul>
+                                    {save.map((skill, index) => <li key={index}>{skill}</li>)}
+                                        </ul>
                                 </div>
                             </div>
                         </div>  
