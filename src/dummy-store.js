@@ -20,6 +20,13 @@ export default {
             'name': 'John',
             'race': 0,
             'class': 0,
+            'skills': ['Athletics', 'Survival'],
+            'str': 15,
+            'dex': 12,
+            'con': 14,
+            'int': 8,
+            'wis': 10,
+            'cha': 13,
             'userid': "Z100"
         }
     ]
