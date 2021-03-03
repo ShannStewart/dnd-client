@@ -22,6 +22,7 @@ class App extends Component {
     userID: 0,
     characterID: 0,
     form: false,
+    current: null
 };
 
 componentDidMount() {
@@ -46,10 +47,24 @@ userSubmit = (u, p) => {
   TokenService.saveAuthToken(ider);
 }
 
-newForm = () =>{
-  console.log('openForm ran');
+charaSubmit = (name, job, race, str, dex, con, int, wis, cha, skills) => {
+  console.log('charaSubmit ran');
+  var chara = { "id": "newChara" + this.state.characterID, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
 
-  this.setState({ form : true });
+  var newCharaID = this.state.characterID + 1;
+  //console.log('chara will be: ' + JSON.stringify(chara));
+
+  var charaList = this.state.characters;
+  var newCharaList = charaList.concat(chara);
+
+  this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+
+}
+
+newForm = () =>{
+  //console.log('openForm ran');
+
+  this.setState({ current: null, form : true });
 
 }
 
@@ -58,6 +73,7 @@ closeForm = () => {
 }
 
   render(){
+
     return (
       <div className="App">
         <Switch>
@@ -70,8 +86,10 @@ closeForm = () => {
               userList={this.state.users} 
               charaList={this.state.characters} 
               newForm ={this.newForm}
-              closeForm={this.closeForm} 
-              form={this.state.form}/> )}/>
+              closeForm={this.closeForm}
+              charaSubmit={this.charaSubmit} 
+              form={this.state.form}
+              current={this.state.current}/> )}/>
             :<Route
             exact
             path='/'

@@ -16,12 +16,15 @@ class Home extends Component{
                 userList={this.props.userList} 
                 newForm={this.props.newForm} 
                 form={this.props.form}
+                charaList={this.props.charaList}
                 />
             {this.props.form
                 ?<Sheet
                 fakeAPI={this.props.fakeAPI} 
                 charaList={this.props.charaList}
                 closeForm={this.props.closeForm}
+                charaSubmit={this.props.charaSubmit}
+                current={this.props.current}
                 />
                 :<div></div>}        
             </div>

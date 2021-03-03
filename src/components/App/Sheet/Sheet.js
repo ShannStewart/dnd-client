@@ -5,6 +5,17 @@ import './Sheet.css';
 import { findRace, findJob, findBonus } from '../../../apiHelper'
 
 class Sheet extends Component{
+    constructor(props){
+        super(props)
+        console.log(this.props.current);
+
+        if (this.props.current == null || this.props.current == undefined){
+            this.setState({ id : null });
+        }
+        else{
+            this.setState({ id : this.props.current });
+        }
+    }
         state = {
             id: null,
             charaName: '',
@@ -319,13 +330,26 @@ class Sheet extends Component{
 
     submitChara = ev =>{
         ev.preventDefault();
-        console.log('submitChara ran');
+        //console.log('submitChara ran');
+        
+        this.props.charaSubmit();
     }
 
     resetChara = ev =>{
-    console.log('resetChara ran');     
+    //console.log('resetChara ran');     
 
-    this.props.closeForm();
+    this.props.closeForm(
+        this.state.charaName,
+        this.state.job,
+        this.state.race,
+        this.state.str,
+        this.state.dex,
+        this.state.con,
+        this.state.int,
+        this.state.wis,
+        this.state.cha,
+        this.state.skills
+        );
     }
 
     render(){
@@ -437,13 +461,13 @@ class Sheet extends Component{
                         <div>
                             <label>Name</label>
                             <h1>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
-                            <input type='text' name='chara_name' onChange={this.handleNameChange}></input>
+                            <input type='text' name='chara_name' id='chara_name' onChange={this.handleNameChange}></input>
                             <label>Race</label>
-                            <select name='chara_race' onChange={this.handleRaceChange}>
+                            <select name='chara_race' id='chara_race' onChange={this.handleRaceChange}>
                                 <option value={null}>Select</option>
                                 {races.map(race => <option key={race.id} name={race.name} value={race.id}>{race.name}</option>)}
                             </select>
-                            <select name='chara_race' onChange={this.handleJobChange}>
+                            <select name='chara_job' id='chara_job' onChange={this.handleJobChange}>
                                 <option value={null}>Select</option>
                                 {jobs.map(job => <option key={job.id} name={job.name} value={job.id}>{job.name}</option>)}
                             </select>
@@ -454,7 +478,7 @@ class Sheet extends Component{
                                 <div>
                                     <div className='ability'>
                                         <h1>{str_mod}</h1><h2>{str_total}</h2><h3> = </h3><h3> {this.state.str_bonus} </h3><h3> + </h3><h3>{this.state.str}</h3>
-                                        <select name='chara_str' onChange={this.handleStrChange}>
+                                        <select name='chara_str' id='chara_str' onChange={this.handleStrChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
@@ -464,7 +488,7 @@ class Sheet extends Component{
                                 <div>
                                     <div className='ability'>
                                         <h1>{dex_mod}</h1><h2>{dex_total}</h2><h3> = </h3><h3> {this.state.dex_bonus} </h3><h3> + </h3><h3>{this.state.dex}</h3>
-                                        <select name='chara_dex' onChange={this.handleDexChange}>
+                                        <select name='chara_dex' id='chara_dex' onChange={this.handleDexChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
@@ -474,7 +498,7 @@ class Sheet extends Component{
                                 <div>
                                     <div className='ability'>
                                         <h1>{con_mod}</h1><h2>{con_total}</h2><h3> = </h3><h3> {this.state.con_bonus} </h3><h3> + </h3><h3>{this.state.con}</h3>
-                                        <select name='chara_con' onChange={this.handleConChange}>
+                                        <select name='chara_con' id='chara_con' onChange={this.handleConChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
@@ -484,7 +508,7 @@ class Sheet extends Component{
                                 <div>
                                     <div className='ability'>
                                         <h1>{int_mod}</h1><h2>{int_total}</h2><h3> = </h3><h3> {this.state.int_bonus} </h3><h3> + </h3><h3>{this.state.int}</h3>
-                                        <select name='chara_int' onChange={this.handleIntChange}>
+                                        <select name='chara_int' id='chara_int' onChange={this.handleIntChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
@@ -494,7 +518,7 @@ class Sheet extends Component{
                                 <div>
                                     <div className='ability'>
                                         <h1>{wis_mod}</h1><h2>{wis_total}</h2><h3> = </h3><h3> {this.state.wis_bonus} </h3><h3> + </h3><h3>{this.state.wis}</h3>
-                                        <select name='chara_wis' onChange={this.handleWisChange}>
+                                        <select name='chara_wis' id='chara_wis' onChange={this.handleWisChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
@@ -504,7 +528,7 @@ class Sheet extends Component{
                                 <div>   
                                     <div className='ability'>
                                         <h1>{cha_mod}</h1><h2>{cha_total}</h2><h3> = </h3><h3> {this.state.cha_bonus} </h3><h3> + </h3><h3>{this.state.cha}</h3>
-                                        <select name='chara_cha' onChange={this.handleChaChange}>
+                                        <select name='chara_cha' id='chara_cha' onChange={this.handleChaChange}>
                                             <option value={null}>Select</option>
                                             {this.state.ability_scores.map((ability, index) => <option key={index} name={ability} value={ability}>{ability}</option>)}
                                         </select>
