@@ -53,6 +53,10 @@ newForm = () =>{
 
 }
 
+closeForm = () => {
+  this.setState({ form : false });
+}
+
   render(){
     return (
       <div className="App">
@@ -65,7 +69,8 @@ newForm = () =>{
               fakeAPI={fakeAPI}
               userList={this.state.users} 
               charaList={this.state.characters} 
-              newForm ={this.newForm} 
+              newForm ={this.newForm}
+              closeForm={this.closeForm} 
               form={this.state.form}/> )}/>
             :<Route
             exact

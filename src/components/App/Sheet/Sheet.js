@@ -8,8 +8,6 @@ class Sheet extends Component{
         state = {
             id: null,
             charaName: '',
-            charaRace: '',
-            charaJob: '',
             ability_scores: [15, 14, 13, 12, 10, 8],
             str: 0,
             dex: 0,
@@ -67,7 +65,7 @@ class Sheet extends Component{
          raceWis = 0;
          raceCha = 0;
 
-        this.setState({ charaRace : null, race : null, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, });
+        this.setState({ race : null, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, });
     }
     else{
 
@@ -117,7 +115,7 @@ class Sheet extends Component{
           } else {
           raceCha = 0;}
 
-        this.setState({ charaRace : newRace.name, race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, raceSkills: skill });
+        this.setState({ race : newRace.id, str_bonus: raceStr, dex_bonus: raceDex, con_bonus: raceCon, int_bonus: raceInt, wis_bonus: raceWis, cha_bonus: raceCha, raceSkills: skill });
         }
 
 
@@ -127,12 +125,12 @@ class Sheet extends Component{
         var jobNumber = ev.target.value;
 
         if(isNaN(jobNumber) || jobNumber == null){
-            this.setState({ charaJob : null, job : null });
+            this.setState({ job : null });
         }
         else{
           var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
 
-          this.setState({ charaJob : newJob.name, job : newJob.id, skills: [] });
+          this.setState({ job : newJob.id, skills: [] });
         }
   
       }
@@ -319,6 +317,17 @@ class Sheet extends Component{
         this.setState({ skills : newSkills });
     }
 
+    submitChara = ev =>{
+        ev.preventDefault();
+        console.log('submitChara ran');
+    }
+
+    resetChara = ev =>{
+    console.log('resetChara ran');     
+
+    this.props.closeForm();
+    }
+
     render(){
 
         var skills = this.props.fakeAPI.skills;
@@ -344,17 +353,6 @@ class Sheet extends Component{
         var jobs = Array.from(this.props.fakeAPI.classes);
         //console.log(races);
 
-        var theWord = '';
-
-
-        if(this.state.charaName !== '' && ((this.state.charaRace !== '' && this.state.charaRace !== null) || (this.state.charaJob !=='' && this.state.charaJob !== null))){
-            theWord = 'the';
-        }
-
-        if((this.state.charaName == '' || this.state.charaName == null) && ((this.state.charaRace !== '' && this.state.charaRace !== null) || (this.state.charaJob !== '' && this.state.charaJob !== null))){
-            theWord = 'The';
-        }
-
       //  var total = ability + this.state.cha_bonus;
       //  var mod = this.handleMod(total);
 
@@ -366,6 +364,9 @@ class Sheet extends Component{
       var lang = [];
       var save = [];
 
+      var charaRace = '';
+      var charaJob = '';
+
       if(this.state.job !== null && !isNaN(this.state.job) && this.state.job !== undefined){
         proficiency = this.handleProficiencies();
         decision = this.handleDecision();
@@ -374,6 +375,7 @@ class Sheet extends Component{
         proficiency = currentJob.proficiencies_choice;
         feat = currentJob.feat;
         save = currentJob.savingThrow;
+        charaJob = currentJob.name
         //console.log(feat);
             }
 
@@ -383,7 +385,19 @@ class Sheet extends Component{
            feat = feat.concat(currentRace.feat);
            prof = currentRace.proficiencies;
            lang = currentRace.language;
+           charaRace = currentRace.name;
             
+            }
+
+            var theWord = '';
+
+
+            if(this.state.charaName !== '' && ((charaRace !== '' && charaRace !== null) || (charaJob !=='' && charaJob !== null))){
+                theWord = 'the';
+            }
+    
+            if((this.state.charaName == '' || this.state.charaName == null) && ((charaRace !== '' && charaRace !== null) || (charaJob !== '' && charaJob !== null))){
+                theWord = 'The';
             }
 
         var str_total = this.state.str + this.state.str_bonus;
@@ -418,11 +432,11 @@ class Sheet extends Component{
 
         return( 
             <div className='sheet'>
-                <form>
+                <form onSubmit={this.submitChara}>
                     <div className='mainForm'>
                         <div>
                             <label>Name</label>
-                            <h1>{this.state.charaName} {theWord} {this.state.charaRace} {this.state.charaJob}</h1>
+                            <h1>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
                             <input type='text' name='chara_name' onChange={this.handleNameChange}></input>
                             <label>Race</label>
                             <select name='chara_race' onChange={this.handleRaceChange}>
@@ -512,13 +526,13 @@ class Sheet extends Component{
                             <div className='skills'>
                                 <p>Proficiencies</p>
                                 <ul>
-                                    {this.state.skills.map((skill, index) => <li key={index}>{skill}<button onClick={(e) => {this.removeSkill(e,skill)}}>-</button></li>)}
+                                    {this.state.skills.map((skill, index) => <li key={index}>{skill}<button type="button" onClick={(e) => {this.removeSkill(e,skill)}}>-</button></li>)}
                                 </ul>
                                 <div><select id={i} key={i} name='prof' id='prof'>
                                      <option value={null}>Select</option>
                                         {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
                                     </select>
-                                    {(this.state.skills.length < proficiency)? <button onClick={this.addSkill}>+</button> : <div></div>}</div>
+                                    {(this.state.skills.length < proficiency)? <button type="button" onClick={this.addSkill}>+</button> : <div></div>}</div>
                             </div>
                         </div>
                         <div>
@@ -545,6 +559,10 @@ class Sheet extends Component{
                             </div>
                         </div>  
                     </div>
+                    </div>
+                    <div className='confirm'>
+                        <button type="submit">Submit</button>
+                        <button type="button" onClick={this.resetChara}>Cancel</button>
                     </div>
                 </form>
             </div>

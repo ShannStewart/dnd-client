@@ -21,6 +21,7 @@ class Home extends Component{
                 ?<Sheet
                 fakeAPI={this.props.fakeAPI} 
                 charaList={this.props.charaList}
+                closeForm={this.props.closeForm}
                 />
                 :<div></div>}        
             </div>
