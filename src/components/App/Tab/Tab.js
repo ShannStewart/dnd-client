@@ -5,7 +5,7 @@ import './Tab.css'
 class Tab extends Component{
 
     tabClick = ev => {
-        console.log('tabClick ran: ' + JSON.stringify(this.props.character));
+        //console.log('tabClick ran: ' + JSON.stringify(this.props.character));
 
         this.props.reopenForm(this.props.character.id);
     }

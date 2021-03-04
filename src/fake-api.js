@@ -49,7 +49,7 @@ export default{
             'id': '2',
             'name': 'Wizard',
             'proficiencies_choice': 2,
-            'proficiencies': ['Arcana', 'History', 'Insight', 'Investigaiton', 'Medicine', 'Religion'],
+            'proficiencies': ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'],
             'feat': ['Daggers', 'Quarterstaffs', 'Darts', 'Slings'],
             'savingThrow': ['Int', 'Wis'],
             'hp': 6

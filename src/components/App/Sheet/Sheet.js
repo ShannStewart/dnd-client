@@ -8,7 +8,7 @@ import { findCharacter } from '../../../helper'
 class Sheet extends Component{
 
     state = {
-        id: null,
+        id: this.props.current,
         charaName: '',
         ability_scores: [15, 14, 13, 12, 10, 8],
         str: 0,
@@ -32,21 +32,20 @@ class Sheet extends Component{
     constructor(props){
         super(props)
 
-        console.log(this.props.current);
-
         if (this.props.current == null || this.props.current == undefined){
             console.log('no chara');
-            this.setState({ id : null });
         }
         else{
 
             var chara = findCharacter(this.props.charaList, this.props.current);
             
             console.log('chara: ' + chara.name);
-            
-            //document.getElementById("chara_name").value = chara.name;
+            console.log(this.state.id); 
 
-            this.setState({ id : this.props.current });
+            this.setState({ charaName: chara.name });
+
+            console.log('after setState');
+
         }
     }
        
@@ -474,7 +473,7 @@ class Sheet extends Component{
                         <div>
                             <label>Name</label>
                             <h1>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
-                            <input type='text' name='chara_name' id='chara_name' onChange={this.handleNameChange}></input>
+                            <input type='text' name='chara_name' id='chara_name' value={this.state.charaName} onChange={this.handleNameChange}></input>
                             <label>Race</label>
                             <select name='chara_race' id='chara_race' onChange={this.handleRaceChange}>
                                 <option value={null}>Select</option>
