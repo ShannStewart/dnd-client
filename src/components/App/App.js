@@ -73,10 +73,10 @@ newForm = () =>{
 
 reopenForm = (id) =>{
 
-  console.log(id);
+  //console.log(id);
 
  this.setState({ current: null, form : false }, () => {
- // this.setState({ current: id, form : true });
+  this.setState({ current: id, form : true });
 });
 
 }

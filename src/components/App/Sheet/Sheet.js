@@ -6,45 +6,50 @@ import { findRace, findJob, findBonus } from '../../../apiHelper'
 import { findCharacter } from '../../../helper'
 
 class Sheet extends Component{
+
+    state = {
+        id: null,
+        charaName: '',
+        ability_scores: [15, 14, 13, 12, 10, 8],
+        str: 0,
+        dex: 0,
+        con: 0,
+        int: 0,
+        wis: 0,
+        cha: 0,
+        str_bonus: 0,
+        dex_bonus: 0,
+        con_bonus: 0,
+        int_bonus: 0,
+        wis_bonus: 0,
+        cha_bonus: 0,
+        skills: [],
+        raceSkills: [],
+        job: null,
+        race: null,
+    }
+
     constructor(props){
         super(props)
+
         console.log(this.props.current);
 
         if (this.props.current == null || this.props.current == undefined){
+            console.log('no chara');
             this.setState({ id : null });
         }
         else{
 
             var chara = findCharacter(this.props.charaList, this.props.current);
             
-            console.log('chara: ' + chara);
+            console.log('chara: ' + chara.name);
             
-            document.getElementById("chara_name").value= chara.name;
+            //document.getElementById("chara_name").value = chara.name;
 
             this.setState({ id : this.props.current });
         }
     }
-        state = {
-            id: null,
-            charaName: '',
-            ability_scores: [15, 14, 13, 12, 10, 8],
-            str: 0,
-            dex: 0,
-            con: 0,
-            int: 0,
-            wis: 0,
-            cha: 0,
-            str_bonus: 0,
-            dex_bonus: 0,
-            con_bonus: 0,
-            int_bonus: 0,
-            wis_bonus: 0,
-            cha_bonus: 0,
-            skills: [],
-            raceSkills: [],
-            job: null,
-            race: null,
-        }
+       
 
     handleNameChange = ev => {
 
