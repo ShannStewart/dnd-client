@@ -15,6 +15,7 @@ class Home extends Component{
                 charaList={this.props.charaList} 
                 userList={this.props.userList} 
                 newForm={this.props.newForm} 
+                reopenForm={this.props.reopenForm}
                 form={this.props.form}
                 charaList={this.props.charaList}
                 />

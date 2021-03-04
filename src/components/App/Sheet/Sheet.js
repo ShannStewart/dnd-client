@@ -3,6 +3,7 @@ import { React, Component } from 'react'
 import './Sheet.css';
 
 import { findRace, findJob, findBonus } from '../../../apiHelper'
+import { findCharacter } from '../../../helper'
 
 class Sheet extends Component{
     constructor(props){
@@ -13,6 +14,13 @@ class Sheet extends Component{
             this.setState({ id : null });
         }
         else{
+
+            var chara = findCharacter(this.props.charaList, this.props.current);
+            
+            console.log('chara: ' + chara);
+            
+            document.getElementById("chara_name").value= chara.name;
+
             this.setState({ id : this.props.current });
         }
     }

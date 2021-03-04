@@ -64,7 +64,20 @@ charaSubmit = (name, job, race, str, dex, con, int, wis, cha, skills) => {
 newForm = () =>{
   //console.log('openForm ran');
 
-  this.setState({ current: null, form : true });
+  this.setState({ current: null, form : false }, () => {
+    this.setState({ current: null, form : true });
+  });
+ 
+
+}
+
+reopenForm = (id) =>{
+
+  console.log(id);
+
+ this.setState({ current: null, form : false }, () => {
+ // this.setState({ current: id, form : true });
+});
 
 }
 
@@ -86,6 +99,7 @@ closeForm = () => {
               userList={this.state.users} 
               charaList={this.state.characters} 
               newForm ={this.newForm}
+              reopenForm={this.reopenForm}
               closeForm={this.closeForm}
               charaSubmit={this.charaSubmit} 
               form={this.state.form}
