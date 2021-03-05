@@ -22,7 +22,18 @@ class App extends Component {
     userID: 0,
     characterID: 0,
     form: false,
-    current: null
+
+    current: null,
+    charaName: '',
+    job: null,
+    race: null,
+    str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0,
+    skills: []
 };
 
 componentDidMount() {
@@ -65,7 +76,19 @@ newForm = () =>{
   //console.log('openForm ran');
 
   this.setState({ current: null, form : false }, () => {
-    this.setState({ current: null, form : true });
+    this.setState({ 
+      current: null,
+      charaName: '',
+      job: null,
+      race: null,
+      str: 0,
+      dex: 0,
+      con: 0,
+      int: 0,
+      wis: 0,
+      cha: 0,
+      skills: [],
+      form : true });
   });
  
 
@@ -75,8 +98,25 @@ reopenForm = (id) =>{
 
   //console.log(id);
 
- this.setState({ current: null, form : false }, () => {
-  this.setState({ current: id, form : true });
+  var chara = findCharacter(this.state.characters, id);
+
+  //console.log(JSON.stringify(chara));
+
+ this.setState({ 
+  current: id,
+  charaName: chara.name,
+  job: chara.class,
+  race: chara.race,
+  str: chara.str,
+  dex: chara.dex,
+  con: chara.con,
+  int: chara.int,
+  wis: chara.wis,
+  cha: chara.cha,
+  skills: chara.skills, 
+  form : false }, () => {
+  this.setState({ 
+    form : true });
 });
 
 }
@@ -103,7 +143,18 @@ closeForm = () => {
               closeForm={this.closeForm}
               charaSubmit={this.charaSubmit} 
               form={this.state.form}
-              current={this.state.current}/> )}/>
+              current={this.state.current}
+              charaName={this.state.charaName}
+              job={this.state.job}
+              race={this.state.race}
+              str={this.state.str}
+              dex={this.state.dex}
+              con={this.state.con}
+              int={this.state.int}
+              wis={this.state.wis}
+              cha={this.state.cha}
+              skills={this.state.skills}
+              /> )}/>
             :<Route
             exact
             path='/'

@@ -26,6 +26,16 @@ class Home extends Component{
                 closeForm={this.props.closeForm}
                 charaSubmit={this.props.charaSubmit}
                 current={this.props.current}
+                charaName={this.props.charaName}
+                job={this.props.job}
+                race={this.props.race}
+                str={this.props.str}
+                dex={this.props.dex}
+                con={this.props.con}
+                int={this.props.int}
+                wis={this.props.wis}
+                cha={this.props.cha}
+                skills={this.props.skills}
                 />
                 :<div></div>}        
             </div>

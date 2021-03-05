@@ -18,8 +18,8 @@ export default {
         {
             'id': 'C100',
             'name': 'John',
-            'race': 0,
-            'class': 0,
+            'race': "0",
+            'class': "0",
             'skills': ['Athletics', 'Survival'],
             'str': 15,
             'dex': 12,
