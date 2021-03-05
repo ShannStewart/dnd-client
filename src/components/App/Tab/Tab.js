@@ -29,12 +29,14 @@ class Tab extends Component{
             var Job = thisJob.name;
         }
 
+        //console.log(thisRace);
+        //console.log(thisJob);
 
-        if(Name !== '' && ((Race !== '' && Race !== null) || (Job !=='' && Job !== null))){
+        if(Name !== '' && ((thisRace !== '' && thisRace !== null && thisRace !== undefined) || (thisJob !=='' && thisJob !== null && thisJob !== undefined))){
             theWord = 'the';
         }
 
-        if((Name == '' || Name == null) && ((Race !== '' && Race !== null) || (Job !== '' && Job !== null))){
+        if((Name == '' || Name == null) && ((thisRace !== '' && thisRace !== null) || (thisJob !== '' && thisJob !== null))){
             theWord = 'The';
         }
 

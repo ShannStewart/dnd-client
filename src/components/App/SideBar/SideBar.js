@@ -19,12 +19,19 @@ class SideBar extends Component{
     }
 
     render(){
+
+        var user = TokenService.getAuthToken();
+        console.log(user);
+
+        var allChara = this.props.charaList;
+        var newList = allChara.filter(chara => chara.userid == user)
+        
         return(
             <div className='sidebar'>
                  <button onClick={this.handleLogOut}>Log Out</button>
                  <button onClick={this.handelAddition}>Add Character</button>
                  <div className='charaTabs'>
-                    {this.props.charaList.map((chara, index) => <Tab key={index} character={chara} reopenForm={this.props.reopenForm}/>)}
+                    {newList.map((chara, index) => <Tab key={index} character={chara} reopenForm={this.props.reopenForm}/>)}
                  </div>
             </div>
         )
