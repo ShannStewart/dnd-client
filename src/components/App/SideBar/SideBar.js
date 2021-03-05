@@ -23,7 +23,6 @@ class SideBar extends Component{
             <div className='sidebar'>
                  <button onClick={this.handleLogOut}>Log Out</button>
                  <button onClick={this.handelAddition}>Add Character</button>
-                 <p>Sidebar</p>
                  <div className='charaTabs'>
                     {this.props.charaList.map((chara, index) => <Tab key={index} character={chara} reopenForm={this.props.reopenForm}/>)}
                  </div>

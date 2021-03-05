@@ -59,9 +59,9 @@ userSubmit = (u, p) => {
 }
 
 charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
-  console.log('charaSubmit ran');
+ // console.log('charaSubmit ran: ' + id);
 
-  if (id == (null || undefined)){
+  if (id == null || id == undefined){
     var chara = { "id": "newChara" + this.state.characterID, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
 
     var newCharaID = this.state.characterID + 1;

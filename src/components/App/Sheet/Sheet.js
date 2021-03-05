@@ -140,7 +140,7 @@ class Sheet extends Component{
 
     handleProficiencies = () =>{
         var jobNumber = this.state.job;
-        console.log(jobNumber);
+       // console.log(jobNumber);
 
         var newJob = findJob(this.props.fakeAPI.classes, jobNumber);
         var jobBonus = 0;
@@ -337,7 +337,7 @@ class Sheet extends Component{
 
     submitChara = ev =>{
         ev.preventDefault();
-        console.log('submitChara ran');
+       // console.log('submitChara ran');
 
         var name = ''; 
         var job = null;
@@ -359,7 +359,7 @@ class Sheet extends Component{
         }
      
         this.props.charaSubmit(
-            this.state.current,
+            this.state.id,
             this.state.charaName,
             this.state.job,
             this.state.race,
@@ -383,7 +383,7 @@ class Sheet extends Component{
 
     render(){
 
-        console.log(this.state);
+      //  console.log(this.state);
 
         var skills = this.props.fakeAPI.skills;
         var raceSkills = [];
