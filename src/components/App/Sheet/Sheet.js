@@ -337,26 +337,48 @@ class Sheet extends Component{
 
     submitChara = ev =>{
         ev.preventDefault();
-        //console.log('submitChara ran');
+        console.log('submitChara ran');
+
+        var name = ''; 
+        var job = null;
+        var race = null; 
+        var str = 0; 
+        var dex = 0 
+        var con = 0; 
+        var int = 0; 
+        var wis = 0;
+        var cha = 0; 
+        var skills = [];
+
+        var require = document.getElementById("requirements");
+        require.classList.add("hidden");
+
+        if( this.state.charaName == (undefined || null) && this.state.job == (undefined || null) && this.state.race == (undefined || null)){
+            require.classList.remove("hidden");
+            return console.log("no name, class and race"); 
+        }
+     
+        this.props.charaSubmit(
+            this.state.current,
+            this.state.charaName,
+            this.state.job,
+            this.state.race,
+            this.state.str,
+            this.state.dex,
+            this.state.con,
+            this.state.int,
+            this.state.wis,
+            this.state.cha,
+            this.state.skills
+        )
         
-        this.props.charaSubmit();
+        //this.props.charaSubmit();
     }
 
     resetChara = ev =>{
     //console.log('resetChara ran');     
 
-    this.props.closeForm(
-        this.state.charaName,
-        this.state.job,
-        this.state.race,
-        this.state.str,
-        this.state.dex,
-        this.state.con,
-        this.state.int,
-        this.state.wis,
-        this.state.cha,
-        this.state.skills
-        );
+    this.props.closeForm();
     }
 
     render(){
@@ -600,6 +622,9 @@ class Sheet extends Component{
                         <button type="button" onClick={this.resetChara}>Cancel</button>
                     </div>
                 </form>
+                <div className='errorSpace'>
+                    <p className="hidden" id="requirements">You must have at least a name, race or class selected</p>
+                </div>
             </div>
         )
     }

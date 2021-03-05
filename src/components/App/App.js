@@ -58,17 +58,27 @@ userSubmit = (u, p) => {
   TokenService.saveAuthToken(ider);
 }
 
-charaSubmit = (name, job, race, str, dex, con, int, wis, cha, skills) => {
+charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
   console.log('charaSubmit ran');
-  var chara = { "id": "newChara" + this.state.characterID, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
 
-  var newCharaID = this.state.characterID + 1;
-  //console.log('chara will be: ' + JSON.stringify(chara));
+  if (id == (null || undefined)){
+    var chara = { "id": "newChara" + this.state.characterID, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
 
-  var charaList = this.state.characters;
-  var newCharaList = charaList.concat(chara);
+    var newCharaID = this.state.characterID + 1;
+    //console.log('chara will be: ' + JSON.stringify(chara));
 
-  this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+    var charaList = this.state.characters;
+    var newCharaList = charaList.concat(chara);
+
+    this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+  }
+  else{
+    var chara = { "id": id, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
+    var charaList = this.state.characters.filter(chara => chara.id !== id);
+    var newCharaList = charaList.concat(chara);
+    this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+  }
+  
 
 }
 
