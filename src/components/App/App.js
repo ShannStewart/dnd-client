@@ -19,8 +19,8 @@ class App extends Component {
   state = {
     characters: [],
     users: [],
-    userID: 0,
-    characterID: 0,
+    //userID: 0,
+    //characterID: 0,
     form: false,
 
     current: null,
@@ -54,7 +54,7 @@ componentDidMount() {
         charaRes.json(),
       ])
     })
-    .then(([users, chara ]) => {
+    .then(([ users, chara ]) => {
       this.setState({ users, chara  })
     })
     .catch(error => {
@@ -62,46 +62,86 @@ componentDidMount() {
     })
 }
 
-userSubmit = (u, p) => {
-  //console.log('userSubmit ran');
-  //console.log('running userSubmit with: ' + u + ' and ' + p);
+userReload = (data) =>{
 
-  var newUser = { "id": "newUser" + this.state.userID, "user_name": u, "password": p };
-
-  var newUserID = this.state.userID + 1;
-  this.setState({userID: newUserID});
-
-  var newUserList = this.state.users.concat(newUser);
+  var newUserItem = { "id": data.id, "name": data.name, "password": data.password };
+  var newUserList = this.state.users.concat(newUserItem);
   this.setState({ users: newUserList });
 
-  var ider = newUser.id;
+  TokenService.saveAuthToken(data.id);
 
-  TokenService.saveAuthToken(ider);
+}
+
+userSubmit = (u, p) => {
+  var newUser = { "name": u, "password": p };
+
+  var postUser = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(newUser)
+  }
+      
+  fetch(`${config.API_ENDPOINT}/auth`, postUser)  
+  .then(response => response.json())
+  .then(data => this.userReload(data))
+
+}
+
+charaLoad = (data) => {
+  var newCharaItem = { "id": data.id, "question": data.question, "answer": data.answer, "choices": data.choices, "test": data.test, "userid": data.userid, "used": data.used };
+
+  var newCharaList = this.state.characters.concat(newCharaItem);
+
+  this.setState({ characters: newCharaList });
+}
+
+charaReload = (data, id) => {
+  var newCharaItem = { "id": data.id, "question": data.question, "answer": data.answer, "choices": data.choices, "test": data.test, "userid": data.userid, "used": data.used };
+
+  var charaList = this.state.characters.filter(chara => chara.id !== id);
+  var newCharaList = charaList.concat(newCharaItem);
+
+  this.setState({ characters: newCharaList });
 }
 
 charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
  // console.log('charaSubmit ran: ' + id);
 
   if (id == null || id == undefined){
-    var chara = { "id": "newChara" + this.state.characterID, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills }
-    var user = TokenService.getAuthToken();
-    chara.userid = user;
+    var userToken = TokenService.getAuthToken();
 
-    var newCharaID = this.state.characterID + 1;
-    //console.log('chara will be: ' + JSON.stringify(chara));
+    var newChara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills, "userid": userToken }
 
-    var charaList = this.state.characters;
-    var newCharaList = charaList.concat(chara);
-
-    this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+    var postChara = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newChara)
+    }
+        
+    fetch(`${config.API_ENDPOINT}/questions`, postChara)  
+    .then(response => response.json())
+    .then(data => this.charaLoad(data))
+   
   }
   else{
-    var chara = { "id": id, "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills };
-    var user = TokenService.getAuthToken();
-    chara.userid = user;
-    var charaList = this.state.characters.filter(chara => chara.id !== id);
-    var newCharaList = charaList.concat(chara);
-    this.setState({ characterID : newCharaID, characters : newCharaList, form : false });
+    var userToken = TokenService.getAuthToken();
+    var chara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills, "userid": userToken };
+   
+    var patchChara = {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(chara)
+    }
+
+    fetch(`${config.API_ENDPOINT}/questions/${id}`, patchChara)
+    .then(response => response.json())
+    .then(data => this.charaReload(data, id))
   }
   
 
