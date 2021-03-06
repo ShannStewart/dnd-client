@@ -8,9 +8,10 @@ import TokenService from '../../services/token-service'
 import Home from '../App/Routes/Home/Home'
 import Logform from '../App/Routes/Logform/Logform'
 
-import dummyStore from '../../dummy-store'
+//import dummyStore from '../../dummy-store'
 import Register from './Routes/Register/Register';
 import fakeAPI from '../../fake-api';
+import config from '../../config';
 
 import { findUser, findCharacter, getCharasForUser } from '../../helper';
 
@@ -54,8 +55,8 @@ componentDidMount() {
         charaRes.json(),
       ])
     })
-    .then(([ users, chara ]) => {
-      this.setState({ users, chara  })
+    .then(([ users, characters ]) => {
+      this.setState({ users, characters })
     })
     .catch(error => {
       console.error({ error })
@@ -122,7 +123,7 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
       body: JSON.stringify(newChara)
     }
         
-    fetch(`${config.API_ENDPOINT}/questions`, postChara)  
+    fetch(`${config.API_ENDPOINT}/chara`, postChara)  
     .then(response => response.json())
     .then(data => this.charaLoad(data))
    
