@@ -38,7 +38,28 @@ class App extends Component {
 
 componentDidMount() {
   // fake date loading from API call
-  setTimeout(() => this.setState(dummyStore), 600);
+  //setTimeout(() => this.setState(dummyStore), 600);
+
+  Promise.all([
+    fetch(`${config.API_ENDPOINT}/auth`),
+    fetch(`${config.API_ENDPOINT}/chara`),
+  ])
+    .then(([userRes, charaRes ]) => {
+      if (!userRes.ok)
+        return userRes.json().then(e => Promise.reject(e))
+      if (!charaRes.ok)
+        return charaRes.json().then(e => Promise.reject(e))
+      return Promise.all([
+        userRes.json(),
+        charaRes.json(),
+      ])
+    })
+    .then(([users, chara ]) => {
+      this.setState({ users, chara  })
+    })
+    .catch(error => {
+      console.error({ error })
+    })
 }
 
 userSubmit = (u, p) => {
