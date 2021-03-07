@@ -16,7 +16,7 @@ class Register extends Component{
     
       handleSubmit = ev => {
         ev.preventDefault()
-        console.log('register handlesubmit ran');
+       // console.log('register handlesubmit ran');
         var userName = ev.target.username.value;
         var password = ev.target.password.value;
         var confirm = ev.target.confirm.value;

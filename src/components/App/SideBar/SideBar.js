@@ -21,7 +21,7 @@ class SideBar extends Component{
     render(){
 
         var user = TokenService.getAuthToken();
-        console.log(user);
+        //console.log(user);
 
         var allChara = this.props.charaList;
         var newList = allChara.filter(chara => chara.userid == user)

@@ -95,25 +95,29 @@ charaLoad = (data) => {
 
   var newCharaList = this.state.characters.concat(newCharaItem);
 
-  this.setState({ characters: newCharaList });
+  this.setState({ characters: newCharaList, form : false });
 }
 
-charaReload = (data, id) => {
-  var newCharaItem = { "id": data.id, "question": data.question, "answer": data.answer, "choices": data.choices, "test": data.test, "userid": data.userid, "used": data.used };
+charaReload = (chara, id) => {
+  var newCharaItem = chara;
+  newCharaItem.id = id;
 
   var charaList = this.state.characters.filter(chara => chara.id !== id);
   var newCharaList = charaList.concat(newCharaItem);
 
-  this.setState({ characters: newCharaList });
+  this.setState({ characters: newCharaList, form : false });
 }
 
 charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
  // console.log('charaSubmit ran: ' + id);
 
+ var prof = [];
+ prof = prof.concat(skills);
+
   if (id == null || id == undefined){
     var userToken = TokenService.getAuthToken();
 
-    var newChara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills, "userid": userToken }
+    var newChara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken }
 
     var postChara = {
       method: 'POST',
@@ -130,7 +134,7 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
   }
   else{
     var userToken = TokenService.getAuthToken();
-    var chara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": skills, "userid": userToken };
+    var chara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken };
    
     var patchChara = {
       method: 'PATCH',
@@ -140,9 +144,8 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
       body: JSON.stringify(chara)
     }
 
-    fetch(`${config.API_ENDPOINT}/questions/${id}`, patchChara)
-    .then(response => response.json())
-    .then(data => this.charaReload(data, id))
+    fetch(`${config.API_ENDPOINT}/chara/${id}`, patchChara)
+    .then(this.charaReload(chara, id))
   }
   
 

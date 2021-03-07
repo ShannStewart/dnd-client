@@ -444,17 +444,32 @@ class Sheet extends Component{
                 theWord = 'The';
             }
 
-        var i;
-        for (i = 0; i < skills.length; i++){
-            var skillObject = {};
-            skillObject.name = skills[i];
+        
+        if(this.state.skills == null){
 
-            skillObject.proficiency = false;
-            if(this.state.skills.find(skill => skill === skills[i]) || raceSkills.find(skill => skill === skills[i])){
-                skillObject.proficiency = true;
+        }
+        else{
+            var i;
+            for (i = 0; i < skills.length; i++){
+                var skillObject = {};
+                skillObject.name = skills[i];
+    
+                skillObject.proficiency = false;
+                if(this.state.skills.find(skill => skill === skills[i]) || raceSkills.find(skill => skill === skills[i])){
+                    skillObject.proficiency = true;
+                }
+    
+                skillCheck = skillCheck.concat(skillObject);
             }
+        }
 
-            skillCheck = skillCheck.concat(skillObject);
+        var charaSkills;
+      
+        if (this.state.skills == null){
+            charaSkills = [];
+        }
+        else{
+            charaSkills = this.state.skills;
         }
 
         var str_total = this.state.str + this.state.str_bonus;
@@ -583,13 +598,13 @@ class Sheet extends Component{
                             <div className='skills'>
                                 <p>Proficiencies</p>
                                 <ul>
-                                    {this.state.skills.map((skill, index) => <li key={index}>{skill}<button type="button" onClick={(e) => {this.removeSkill(e,skill)}}>-</button></li>)}
+                                    {charaSkills.map((skill, index) => <li key={index}>{skill}<button type="button" onClick={(e) => {this.removeSkill(e,skill)}}>-</button></li>)}
                                 </ul>
                                 <div><select id={i} key={i} name='prof' id='prof'>
                                      <option value={null}>Select</option>
                                         {decision.map((decision, index) => <option key={index} name={decision} value={decision}>{decision}</option>)}
                                     </select>
-                                    {(this.state.skills.length < proficiency)? <button type="button" onClick={this.addSkill}>+</button> : <div></div>}</div>
+                                    {(charaSkills.length < proficiency)? <button type="button" onClick={this.addSkill}>+</button> : <div></div>}</div>
                             </div>
                         </div>
                         <div>
