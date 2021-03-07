@@ -93,7 +93,7 @@ userSubmit = (u, p) => {
 }
 
 charaLoad = (data) => {
-  var newCharaItem = { "id": data.id, "question": data.question, "answer": data.answer, "choices": data.choices, "test": data.test, "userid": data.userid, "used": data.used };
+  var newCharaItem = { "id": data.id,  "name": data.name, "class": data.class, "race": data.race, "str": data.str, "dex": data.dex, "con": data.con, "int": data.int, "wis": data.wis, "cha": data.cha, "skills": data.skills, "userid": data.userid};
 
   var newCharaList = this.state.characters.concat(newCharaItem);
 
