@@ -45,7 +45,7 @@ componentDidMount() {
     fetch(`${config.API_ENDPOINT}/auth`),
     fetch(`${config.API_ENDPOINT}/chara`),
   ])
-    .then(([userRes, charaRes ]) => {
+    .then(([ userRes, charaRes ]) => {
       if (!userRes.ok)
         return userRes.json().then(e => Promise.reject(e))
       if (!charaRes.ok)
@@ -70,6 +70,8 @@ userReload = (data) =>{
   this.setState({ users: newUserList });
 
   TokenService.saveAuthToken(data.id);
+
+  window.location.reload();
 
 }
 
