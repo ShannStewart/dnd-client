@@ -19,7 +19,7 @@
 }
 
 .tab:hover{
-    background-color: blue;
+    background-color: lightgray;
 }
 
 @media only screen and (min-width: 768px){
