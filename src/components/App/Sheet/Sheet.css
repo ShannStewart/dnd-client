@@ -1,6 +1,4 @@
-.sheet{
-    background-color: yellow;
-}
+
 
 .ability{
     display: flex;
@@ -46,6 +44,8 @@
 @media only screen and (min-width: 768px){
 .sheet{
     width: 70%;
+    margin: .25cm;
+    padding: .25cm;
 }
 
 }

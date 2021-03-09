@@ -1,28 +1,54 @@
 .sidebar{
-    display: flex;
-    flex-direction: column;
+    text-align: center; 
+    position: relative;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px !important;
+    width: 800px;
+    padding-top: 5px;
 }
 
 .charaTabs{
-    display: flex;
-    flex-direction: row;
-    overflow-y: hidden;
     overflow-x: scroll;
+    overflow-y: hidden;
+    height: 125px;
+    white-space:nowrap
 }
 
+.charaTabs div{
+    margin: 2px;
+    cursor: pointer;
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+    vertical-align:top;
+}
 
 @media only screen and (min-width: 768px){
-.sidebar{
-    width: 30%;
-}
-
-.charaTabs{
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-    align-items: center;
-    margin-top: .25cm;
-}
-
+    .sidebar{
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+    
+    }
+    
+    .charaTabs{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        align-items: center;
+        margin-top: .25cm;
+        height: auto;
+    }
+    
+    .charaTabs div{
+        margin: 2px;
+        cursor: pointer;
+        display:inline-block;
+        *display:inline;
+        *zoom:1;
+        vertical-align:top;
+    }
 
 }

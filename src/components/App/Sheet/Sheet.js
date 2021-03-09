@@ -507,8 +507,8 @@ class Sheet extends Component{
                 <form onSubmit={this.submitChara}>
                     <div className='mainForm'>
                         <div>
+                            <h1 className='characterTitle'>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
                             <label>Name</label>
-                            <h1>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
                             <input type='text' name='chara_name' id='chara_name' value={this.state.charaName} onChange={this.handleNameChange}></input>
                             <label>Race</label>
                             <select name='chara_race' id='chara_race' value={this.state.race} onChange={this.handleRaceChange}>
