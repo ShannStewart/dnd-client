@@ -69,7 +69,7 @@ class Register extends Component{
         return(
             <div className='Signup'>
                  <header>
-                    <h1 className='siteTitle'>DnD</h1>
+                    <h1 className='siteTitle'>Simple DnD</h1>
                 </header>
             <div className='profileLog'>
                 <div className='profileBack'>
@@ -90,7 +90,7 @@ class Register extends Component{
                         Sign Up
                     </button>
                     </form>
-                    <p>Already have an account?</p><Link to='/'>Log In</Link>
+                    <h4>Already have an account?</h4><Link to='/'>Log In</Link>
                 </div>
                 </div>
             <div className='errorSpace hidden' id='passwordError'>

@@ -64,7 +64,7 @@ render(){
   return(
       <div className='Logform'>
            <header>
-              <h1 className='siteTitle'>DnD</h1>
+              <h1 className='siteTitle'>Simple DnD</h1>
           </header>
               <div className='profileBack'>
               <form action="submit" className='profileForm' onSubmit={this.handleLogIn}>
@@ -80,7 +80,8 @@ render(){
                       Log in
                   </button>
                   </form>
-                  <p>Don't have an account?</p><Link to='/register'>Register</Link>
+                  <h4>Don't have an account?</h4>
+                  <Link to='/register'>Register</Link>
               </div>
               <div className="errorSpace">
                   <p className="hidden" id="usernameMissing">Username is required</p>
