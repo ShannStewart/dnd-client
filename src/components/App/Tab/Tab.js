@@ -13,6 +13,11 @@ class Tab extends Component{
         this.props.reopenForm(this.props.character.id);
     }
 
+    handleDelete = ev => {
+
+        this.props.charaDelete(this.props.character.id)
+    }
+
     render(){
         //console.log(this.props.character);
 
@@ -20,7 +25,7 @@ class Tab extends Component{
 
         var Name = this.props.character.name;
         var thisRace = findRace(fakeAPI.races, this.props.character.race);
-        var thisJob = findJob(fakeAPI.classes, this.props.character.class);
+        var thisJob = findJob(fakeAPI.classes, this.props.character.job);
 
         if(thisRace !== null && thisRace !== undefined){
             var Race = thisRace.name;
@@ -42,8 +47,11 @@ class Tab extends Component{
 
 
         return(
-            <div className='tab' onClick={this.tabClick}>
-                <h4>{Name} {theWord} {Race} {Job}</h4>
+            <div className='tab'>
+                <div onClick={this.tabClick}>
+                    <h4>{Name} {theWord} {Race} {Job}</h4> 
+                </div>
+                <button onClick={this.handleDelete}>X</button>
             </div>
         )
     }

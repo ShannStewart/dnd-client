@@ -18,6 +18,7 @@ class Home extends Component{
                 reopenForm={this.props.reopenForm}
                 form={this.props.form}
                 charaList={this.props.charaList}
+                charaDelete={this.props.charaDelete}
                 />
             {this.props.form
                 ?<Sheet

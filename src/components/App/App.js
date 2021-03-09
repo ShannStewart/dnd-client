@@ -93,7 +93,7 @@ userSubmit = (u, p) => {
 }
 
 charaLoad = (data) => {
-  var newCharaItem = { "id": data.id,  "name": data.name, "class": data.class, "race": data.race, "str": data.str, "dex": data.dex, "con": data.con, "int": data.int, "wis": data.wis, "cha": data.cha, "skills": data.skills, "userid": data.userid};
+  var newCharaItem = { "id": data.id,  "name": data.name, "job": data.job, "race": data.race, "str": data.str, "dex": data.dex, "con": data.con, "int": data.int, "wis": data.wis, "cha": data.cha, "skills": data.skills, "userid": data.userid};
 
   var newCharaList = this.state.characters.concat(newCharaItem);
 
@@ -113,13 +113,16 @@ charaReload = (chara, id) => {
 charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
  // console.log('charaSubmit ran: ' + id);
 
+console.log('job: ' + job);
+console.log('race: ' + race);
+
  var prof = [];
  prof = prof.concat(skills);
 
   if (id == null || id == undefined){
     var userToken = TokenService.getAuthToken();
 
-    var newChara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken }
+    var newChara = { "name": name, "job": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken }
 
     var postChara = {
       method: 'POST',
@@ -128,6 +131,8 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
       },
       body: JSON.stringify(newChara)
     }
+
+    console.log(JSON.stringify(postChara));
         
     fetch(`${config.API_ENDPOINT}/chara`, postChara)  
     .then(response => response.json())
@@ -136,7 +141,7 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
   }
   else{
     var userToken = TokenService.getAuthToken();
-    var chara = { "name": name, "class": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken };
+    var chara = { "name": name, "job": job, "race": race, "str": str, "dex": dex, "con": con, "int": int, "wis": wis, "cha": cha, "skills": prof, "userid": userToken };
    
     var patchChara = {
       method: 'PATCH',
@@ -146,10 +151,38 @@ charaSubmit = (id, name, job, race, str, dex, con, int, wis, cha, skills) => {
       body: JSON.stringify(chara)
     }
 
+    console.log(JSON.stringify(patchChara));
+
+
     fetch(`${config.API_ENDPOINT}/chara/${id}`, patchChara)
     .then(this.charaReload(chara, id))
   }
   
+
+}
+
+deleteCharaReload = (id) =>{
+  var list = this.state.characters;
+  var newList = list.filter(character => character.id !== id);
+
+  this.setState({ characters : newList }, () => {
+    //  console.log(this.state.quizzes)
+    }  
+    );
+}
+
+charaDelete = (id) =>{
+
+  var deleteChara = {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(id)
+  }
+
+  fetch(`${config.API_ENDPOINT}/chara/${id}`, deleteChara)
+            .then(this.deleteCharaReload(id))
 
 }
 
@@ -222,7 +255,8 @@ closeForm = () => {
               newForm ={this.newForm}
               reopenForm={this.reopenForm}
               closeForm={this.closeForm}
-              charaSubmit={this.charaSubmit} 
+              charaSubmit={this.charaSubmit}
+              charaDelete={this.charaDelete}
               form={this.state.form}
               current={this.state.current}
               charaName={this.state.charaName}

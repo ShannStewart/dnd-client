@@ -2,6 +2,11 @@
     cursor: pointer;
 }
 
+.tab button {
+    display: block;
+    align-content: flex-end; 
+}
+
 .tab:hover{
     background-color: blue;
 }
