@@ -506,7 +506,8 @@ class Sheet extends Component{
             <div className='sheet'>
                 <form onSubmit={this.submitChara}>
                     <div className='mainForm'>
-                        <div>
+
+                        <section>
                             <h1 className='characterTitle'>{this.state.charaName} {theWord} {charaRace} {charaJob}</h1>
                             <label>Name</label>
                             <input type='text' name='chara_name' id='chara_name' value={this.state.charaName} onChange={this.handleNameChange}></input>
@@ -519,7 +520,8 @@ class Sheet extends Component{
                                 <option value={null}>Select</option>
                                 {jobs.map(job => <option key={job.id} name={job.name} value={job.id}>{job.name}</option>)}
                             </select>
-                        </div>
+                        </section>
+                        
                     <div>
                         <div className='columns'>
                             <div className='abilityList'>

@@ -1,13 +1,6 @@
-
-
 .ability{
     display: flex;
     flex-direction: row;
-}
-
-.mainForm{
-    display: flex;
-    flex-direction: column;
 }
 
 .columns{
@@ -26,10 +19,6 @@
 
 .true{
     color: green
-}
-
-.skills{
-    direction:ltr;
 }
 
 .errorSpace{
