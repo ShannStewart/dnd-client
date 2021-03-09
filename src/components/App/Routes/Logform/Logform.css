@@ -32,6 +32,18 @@ button{
     font-family: 'shipBold'
 }
 
+a{
+    padding: 3px;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    border: black;
+    border-style: solid;
+    border-width: medium;
+    font-family: 'shipBold';
+    text-decoration: none;
+}
+
 .errorSpace{
     color:red;
 }
@@ -59,6 +71,11 @@ button{
     }
     
     button:hover{
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+
+    a:hover{
         transform: scale(1.1);
         cursor: pointer;
     }

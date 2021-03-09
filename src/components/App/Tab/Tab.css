@@ -1,12 +1,35 @@
 .tab{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    width: 6cm;
+    color: black;
+    background-color: white;
+    border: black;
+    border-style: solid;
+    border-radius: 10px;
 }
 
 .tab button {
     display: block;
-    align-content: flex-end; 
+    align-content: flex-end;
+    width: 100%; 
 }
 
 .tab:hover{
     background-color: blue;
+}
+
+@media only screen and (min-width: 768px){
+    .tab{
+        margin-left: 1px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .tab:hover{
+        transform: scale(1.1);
+    }
 }

@@ -1,12 +1,13 @@
 .sidebar{
-    background-color: red;
     display: flex;
     flex-direction: column;
 }
 
 .charaTabs{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }
 
 
@@ -14,5 +15,14 @@
 .sidebar{
     width: 30%;
 }
+
+.charaTabs{
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    align-items: center;
+    margin-top: .25cm;
+}
+
 
 }
