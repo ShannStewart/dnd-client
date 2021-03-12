@@ -219,7 +219,7 @@ reopenForm = (id) =>{
  this.setState({ 
   current: id,
   charaName: chara.name,
-  job: chara.class,
+  job: chara.job,
   race: chara.race,
   str: chara.str,
   dex: chara.dex,
