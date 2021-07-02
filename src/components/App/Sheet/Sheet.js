@@ -592,8 +592,10 @@ class Sheet extends Component{
                                     <h1>{hp}</h1>
                                     <label>HP</label>
                                 </div>
-                                <p>Skills</p>
+                                <p className='skills'>Skills</p>
+                                <div className='skillBox'>
                                 {skillCheck.map((stuff, index) => <p className={stuff.proficiency ? 'true' : 'false'} key={index}>{stuff.name}</p>)}
+                                </div>  
                             </div>
 
                         <div>
